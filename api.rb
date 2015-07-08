@@ -5,8 +5,12 @@ require 'pg'
 # require 'octokit'
 # require 'coveralls'
 # require 'travis'
+require "HTTParty"
 require "rufus/scheduler"
 require "sinatra/multi_route"
+require File.join File.dirname(__FILE__), "roapi_utils"
+
+
 
 class ROApp < Sinatra::Application
   register Sinatra::MultiRoute
@@ -15,8 +19,12 @@ class ROApp < Sinatra::Application
   $client = PG.connect( dbname: 'roregistry' )
 
   # before do
-  #   puts '[Params]'
-  #   p params
+  #   # puts '[ENV]'
+  #   # p ENV['ROAPI_USER']
+  #   # puts '[Params]'
+  #   # p params
+  #   puts '[body]'
+  #   p JSON.parse(request.body.read)
   # end
 
   ## configuration
@@ -25,31 +33,68 @@ class ROApp < Sinatra::Application
     set :show_exceptions, false
   end
 
+  # halt: error helpers
+  error 400 do
+    halt 400, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'malformed request' })
+  end
+
+  error 401 do
+    halt 401, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'unauthorized' })
+  end
+
   not_found do
     halt 404, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'route not found' })
+  end
+
+  error 405 do
+    halt 405, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'Method Not Allowed' })
   end
 
   error 500 do
     halt 500, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'server error' })
   end
 
-  before do
-    headers "Content-Type" => "application/json; charset=utf8"
-    headers "Access-Control-Allow-Methods" => "HEAD, GET"
-    headers "Access-Control-Allow-Origin" => "*"
-    cache_control :public, :must_revalidate, :max_age => 60
+  # headers and auth helpers
+  helpers do
+    def headers_get
+      headers "Content-Type" => "application/json; charset=utf8"
+      headers "Access-Control-Allow-Methods" => "HEAD, GET"
+      headers "Access-Control-Allow-Origin" => "*"
+      cache_control :public, :must_revalidate, :max_age => 60
+    end
+
+    def headers_auth
+      headers "Content-Type" => "application/json; charset=utf8"
+      headers "Access-Control-Allow-Methods" => "HEAD, GET, POST, PUT, DELETE"
+      headers "Access-Control-Allow-Origin" => "*"
+      cache_control :public, :must_revalidate, :max_age => 60
+    end
+
+    def protected!
+      return if authorized?
+      headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+      halt 401
+    end
+
+    def authorized?
+      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ENV['ROAPI_USER'], ENV['ROAPI_PWD']]
+    end
   end
 
   ## routes
   get '/' do
+    headers_get
     redirect '/heartbeat'
   end
 
   get '/docs' do
-    redirect 'http://docs.fishbaseapi.apiary.io'
+    headers_get
+    redirect 'https://github.com/ropensci/roapi/wiki'
   end
 
   get "/heartbeat/?" do
+    headers_get
     $ip = request.ip
     return JSON.pretty_generate({
       "routes" => [
@@ -62,101 +107,57 @@ class ROApp < Sinatra::Application
   end
 
   get '/repos/?:name?/?' do
+    headers_get
     get_repo()
   end
 
   # auth required for post, put, delete
+  # post '/testauth/?' do
+  #   protected!
+  #   headers_auth
+  #   return JSON.generate({ 'message' => 'nice work' })
+  # end
+
   post '/repos/:name/?' do
-    add_repo()
+    protected!
+    headers_auth
+    res = add_repo()
+    if res.result_status == 1
+      status 201
+      body JSON.generate({ "message" => "created" })
+    else
+      halt 400
+    end
   end
 
   put '/repos/:name/?' do
-    edit_repo()
+    protected!
+    headers_auth
+    res = edit_repo()
+    if res.result_status == 1
+      status 201
+      body JSON.generate({ "message" => "record modified" })
+    else
+      halt 400
+    end
   end
 
   delete '/repos/:name/?' do
-    delete_repo()
+    protected!
+    headers_auth
+    res = delete_repo()
+    if res['deleted']
+      status 204
+      body ''
+    else
+      res.delete('deleted')
+      halt 400
+    end
   end
 
-  ## prevent some HTTP methods
-  route :copy, :options, :trace, '/*' do
+  # prevent some HTTP methods
+  route :copy, :patch, :options, :trace, '/*' do
     halt 405
-  end
-
-  ## helper functions
-  def get_repo
-    name = params[:name]
-    fields = params[:fields] || '*'
-    params.delete("fields")
-    fields = check_fields(fields)
-
-    if name.nil?
-      query = sprintf("SELECT %s FROM repos", fields)
-    else
-      query = sprintf("SELECT %s FROM repos WHERE name = '%s'", fields, name)
-    end
-    return do_query(query)
-  end
-
-  def add_repo
-    store = {"POST" => "coming soon"}
-    return JSON.generate(store)
-  end
-
-  def edit_repo
-    store = {"PUT" => "coming soon"}
-    return JSON.generate(store)
-  end
-
-  def delete_repo
-    store = {"DELETE" => "coming soon"}
-    return JSON.generate(store)
-  end
-
-  def check_fields(fields)
-    query = sprintf("SELECT * FROM repos limit 1")
-    res = $client.exec(query)
-    flexist = res.fields
-    fields = fields.split(',')
-    if fields.length == 1
-      fields = fields[0]
-    end
-    if fields.length == 0
-      fields = '*'
-    end
-    if fields == '*'
-      return fields
-    else
-      if fields.class == Array
-        fields = fields.collect{ |d|
-          if flexist.include? d
-            d
-          else
-            nil
-          end
-        }
-        fields = fields.compact.join(',')
-        return fields
-      else
-        return fields
-      end
-    end
-  end
-
-  def do_query(query)
-    res = $client.exec(query)
-    out = res.collect{ |row| row }
-    err = get_error(out)
-    store = {"count" => out.length, "error" => err, "data" => out}
-    return JSON.generate(store)
-  end
-
-  def get_error(x)
-    if x.length == 0
-      return { 'message' => 'no results found' }
-    else
-      return nil
-    end
   end
 
 end
