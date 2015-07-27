@@ -1,45 +1,129 @@
+# create database
+<!-- psql
+CREATE DATABASE roregistry;
+\c roregistry
+\dt -->
+
 # repos
+<!-- DROP TABLE repos; -->
 CREATE TABLE repos(
-	name           VARCHAR(50)    NOT NULL,
-	type           VARCHAR(50)    NOT NULL,
-	maintainer     VARCHAR(50)    NOT NULL,
-	email          VARCHAR(50)    NOT NULL,
-	status         VARCHAR(50)    NOT NULL,
-	installable    bool           NOT NULL,
-	category       VARCHAR(50)    NOT NULL,
-	on_cran        bool           NOT NULL,
-	cran_archived  bool,
-	url            VARCHAR(50)    NOT NULL,
-	root           VARCHAR(50),
-	fork           bool           NOT NULL,
-	description    text
+	name           				VARCHAR(50)    NOT NULL,
+	type           				VARCHAR(50)    NOT NULL,
+	maintainer     				VARCHAR(50)    NOT NULL,
+	email          				VARCHAR(50)    NOT NULL,
+	status         				VARCHAR(50)    NOT NULL,
+	installable    				bool           NOT NULL,
+	build_vignettes 			bool					 NOT NULL,
+	category       				VARCHAR(50)    NOT NULL,
+	on_cran        				bool           NOT NULL,
+	cran_archived  				bool,
+	url            				VARCHAR(50)    NOT NULL,
+	root           				VARCHAR(50),
+	fork           				bool           NOT NULL,
+	description    				text,
+	route_github_travis  	VARCHAR(50),
+	route_appveyor	     	VARCHAR(50)
 );
+<!-- COPY repos FROM '/Users/sacmac/github/ropensci/roapi/repos.csv' CSV HEADER; -->
 
 # cranlogs
 CREATE TABLE cranlogs(
-	name           VARCHAR(50)    NOT NULL,
-	cran_downloads integer        NOT NULL,
-	collected      timestamp      NOT NULL
+	name            VARCHAR(50)    NOT NULL,
+	cran_downloads  integer,
+	collected       timestamp,
+	inserted	    timestamp
 );
 
 # cran
 CREATE TABLE cran(
-	TODO
+	package          VARCHAR(500),
+	title            VARCHAR(500),
+	description      VARCHAR(1000),
+	version          VARCHAR(500),
+	license          VARCHAR(500),
+	authors_r        VARCHAR(1000),
+	url              VARCHAR(500),
+	bugreports       VARCHAR(500),
+	lazydata         VARCHAR(500),
+	vignettebuilder  VARCHAR(500),
+	imports          VARCHAR(500),
+	suggests         VARCHAR(500),
+	packaged         VARCHAR(500),
+	author           VARCHAR(500),
+	maintainer       VARCHAR(500),
+	needscompilation VARCHAR(500),
+	repository       VARCHAR(500),
+	crandb_file_date timestamp,
+	releases         VARCHAR(500),
+	date_publication timestamp,
+	type             VARCHAR(500),
+	depends          VARCHAR(500),
+	pkg_collate          VARCHAR(8000),
+	systemrequirements VARCHAR(500),
+	enhances 		VARCHAR(500),
+	lazyload        VARCHAR(500),
+	copyright       VARCHAR(500),
+	biarch          VARCHAR(500),
+	additional_repositories VARCHAR(500),
+	encoding 				VARCHAR(500),
+	lazydatacompression VARCHAR(500),
+	inserted		 timestamp
 );
 
 # github
 CREATE TABLE github(
-	TODO
+	id             integer,
+	name           VARCHAR(150),
+	created_at     timestamp,
+	updated_at     timestamp,
+	size           integer,
+	language       VARCHAR(20),
+	forks          smallint,
+	open_issues    smallint,
+	watchers       smallint,
+	default_branch VARCHAR(50),
+	inserted	   timestamp
 );
 
-# traivs
+# travis
 CREATE TABLE travis(
-	TODO
+	name 				VARCHAR(50),
+	repository_id       integer,
+	commit_id           integer,
+	number              VARCHAR(50),
+	pull_request        bool,
+	pull_request_number VARCHAR(50),
+	pull_request_title  VARCHAR(500),
+	state               VARCHAR(50),
+	started_at          timestamp,
+	finished_at         timestamp,
+	duration            smallint,
+	job_ids             VARCHAR(50),
+	language            VARCHAR(50),
+	os 					VARCHAR(50),
+	inserted	   timestamp
 );
 
 # appveyor
 CREATE TABLE appveyor(
-	TODO
+	projectid integer,
+	accountid integer,
+	accountname VARCHAR(50),
+	name VARCHAR(50),
+	repositoryname VARCHAR(50),
+	repositorybranch VARCHAR(50),
+	created timestamp,
+	updated timestamp,
+	buildid integer,
+	buildnumber integer,
+	version VARCHAR(50),
+	message VARCHAR(1000),
+	branch VARCHAR(50),
+	commitid VARCHAR(100),
+	committername VARCHAR(100),
+	status VARCHAR(50),
+	finished timestamp,
+	inserted timestamp
 );
 
 # setup relations, if using
