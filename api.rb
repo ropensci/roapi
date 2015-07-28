@@ -5,7 +5,7 @@ require 'pg'
 # require 'octokit'
 # require 'coveralls'
 # require 'travis'
-require "HTTParty"
+require "httparty"
 require "sinatra/multi_route"
 require File.join File.dirname(__FILE__), "roapi_utils"
 

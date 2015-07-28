@@ -3,7 +3,7 @@
 require 'octokit'
 require 'coveralls'
 require 'travis'
-require 'HTTParty'
+require 'httparty'
 require 'time'
 # require '/Users/sacmac/github/ropensci/roapi/api.rb'
 # require '/Users/sacmac/github/ropensci/roapi/collectors.rb'
