@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: appveyor; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: appveyor; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE appveyor (
@@ -55,10 +55,8 @@ CREATE TABLE appveyor (
 );
 
 
-ALTER TABLE public.appveyor OWNER TO sacmac;
-
 --
--- Name: cran; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: cran; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE cran (
@@ -97,10 +95,8 @@ CREATE TABLE cran (
 );
 
 
-ALTER TABLE public.cran OWNER TO sacmac;
-
 --
--- Name: cranlogs; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: cranlogs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE cranlogs (
@@ -111,10 +107,8 @@ CREATE TABLE cranlogs (
 );
 
 
-ALTER TABLE public.cranlogs OWNER TO sacmac;
-
 --
--- Name: github; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: github; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE github (
@@ -132,10 +126,8 @@ CREATE TABLE github (
 );
 
 
-ALTER TABLE public.github OWNER TO sacmac;
-
 --
--- Name: repos; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: repos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE repos (
@@ -158,10 +150,8 @@ CREATE TABLE repos (
 );
 
 
-ALTER TABLE public.repos OWNER TO sacmac;
-
 --
--- Name: travis; Type: TABLE; Schema: public; Owner: sacmac; Tablespace: 
+-- Name: travis; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE travis (
@@ -183,10 +173,8 @@ CREATE TABLE travis (
 );
 
 
-ALTER TABLE public.travis OWNER TO sacmac;
-
 --
--- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY appveyor (projectid, accountid, accountname, name, repositoryname, repositorybranch, created, updated, buildid, buildnumber, version, message, branch, commitid, committername, status, finished, inserted) FROM stdin;
@@ -237,7 +225,7 @@ COPY appveyor (projectid, accountid, accountname, name, repositoryname, reposito
 
 
 --
--- Data for Name: cran; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: cran; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY cran (package, title, description, version, license, authors_r, url, bugreports, lazydata, vignettebuilder, imports, suggests, packaged, author, maintainer, needscompilation, repository, crandb_file_date, releases, date_publication, type, depends, pkg_collate, systemrequirements, enhances, lazyload, copyright, biarch, additional_repositories, encoding, lazydatacompression, inserted) FROM stdin;
@@ -303,7 +291,7 @@ webchem	Chemical Information from the Web	Chemical information from around the w
 
 
 --
--- Data for Name: cranlogs; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: cranlogs; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY cranlogs (name, cran_downloads, collected, inserted) FROM stdin;
@@ -566,7 +554,7 @@ zenodo	0	2015-07-28 00:27:38	2015-07-28 00:27:38
 
 
 --
--- Data for Name: github; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: github; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY github (id, name, created_at, updated_at, size, language, forks, open_issues, watchers, default_branch, inserted) FROM stdin;
@@ -701,7 +689,7 @@ COPY github (id, name, created_at, updated_at, size, language, forks, open_issue
 
 
 --
--- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY repos (name, type, maintainer, email, status, installable, build_vignettes, category, on_cran, cran_archived, url, root, fork, description, route_github_travis, route_appveyor) FROM stdin;
@@ -837,7 +825,7 @@ zenodo	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	literature	f	\N	https:
 
 
 --
--- Data for Name: travis; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: travis; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_number, pull_request_title, state, started_at, finished_at, duration, job_ids, language, os, inserted) FROM stdin;
@@ -845,7 +833,7 @@ COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: sacmac
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
