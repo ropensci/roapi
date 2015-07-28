@@ -6,17 +6,23 @@ require 'pg'
 # require 'coveralls'
 # require 'travis'
 require "HTTParty"
-require "rufus/scheduler"
 require "sinatra/multi_route"
 require File.join File.dirname(__FILE__), "roapi_utils"
-
-
 
 class ROApp < Sinatra::Application
   register Sinatra::MultiRoute
 
   # Set up PostgreSQL
-  $client = PG.connect( dbname: 'roregistry' )
+  val = ENV['SSH_CLIENT']
+  if val.to_s == ''
+    $client = PG.connect( dbname: 'roapi' )
+  else
+    $client = PG.connect(
+      :password => ENV['PSQL_PASSWORD'],
+      :user => "sckott",
+      :dbname => "roapi"
+    )
+  end
 
   # before do
   #   # puts '[ENV]'
