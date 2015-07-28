@@ -5,12 +5,78 @@ def get_repo
   params.delete("fields")
   fields = check_fields(fields)
 
+  # if name.nil?
+  #   query = sprintf("SELECT %s FROM repos", fields)
+  # else
+  #   query = sprintf("SELECT %s FROM repos WHERE name = '%s'", fields, name)
+  # end
+  # return do_query(query)
+
   if name.nil?
-    query = sprintf("SELECT %s FROM repos", fields)
+    nms = pkg_names()
+    tmp = []
+    nms.each{ |x|
+      tmp << concat_query(x, fields)
+    }
+    store = {"count" => tmp.length, "error" => nil, "data" => tmp}
+    return JSON.generate(store)
   else
-    query = sprintf("SELECT %s FROM repos WHERE name = '%s'", fields, name)
+    # tables = ['repos','cran','cranlogs','github','appveyor']
+    # tables = ['repos','cranlogs','github','appveyor']
+    # out = {}
+    # errors = {}
+    # tables.each { |x|
+    #   str = sprintf("SELECT %s FROM %s WHERE name = '%s'", fields, x, name)
+    #   res = do_query_data(str)
+    #   errors.store(x, res['error'])
+    #   out.store(x, res['data'])
+    # }
+    out = concat_query(name, fields)
+    # out["name"] = name
+    store = {"count" => out.length, "error" => nil, "data" => out}
+    return JSON.generate(store)
   end
-  return do_query(query)
+end
+
+def concat_query(name, fields)
+  # tables = ['repos','cran','cranlogs','github','appveyor']
+  tables = ['repos','cranlogs','github','appveyor']
+  out = {}
+  errors = {}
+  tables.each { |x|
+    if x == "repos"
+      str = sprintf("SELECT %s FROM %s WHERE name = '%s'", fields, x, name)
+    else
+      str = sprintf("
+        SELECT DISTINCT ON (a.inserted) %s
+        FROM %s a
+        WHERE name = '%s'
+        ORDER BY a.inserted DESC
+        LIMIT 1;",
+        fields, x, name)
+    end
+    res = do_query_data(str)
+    if x == 'repos'
+      x = "metadata"
+    end
+    errors.store(x, res['error'])
+    out.store(x, res['data'])
+  }
+  out["name"] = name
+  return out
+end
+
+def pkg_names
+  pkgs1 = do_query_data("SELECT name FROM repos")['data']
+  pkgs1.collect{ |x| x.values}.flatten
+end
+
+def do_query_data(query)
+  res = $client.exec(query)
+  out = res.collect{ |row| row }
+  err = get_error(out)
+  store = {"count" => out.length, "error" => err, "data" => out}
+  return store
 end
 
 def add_repo
@@ -134,6 +200,12 @@ def do_query(query)
   err = get_error(out)
   store = {"count" => out.length, "error" => err, "data" => out}
   return JSON.generate(store)
+end
+
+class Hash
+  def compact
+    delete_if { |k, v| v.nil? }
+  end
 end
 
 def get_error(x)

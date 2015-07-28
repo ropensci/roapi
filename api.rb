@@ -101,7 +101,8 @@ class ROApp < Sinatra::Application
         "/docs (GET)",
         "/heartbeat (GET)",
         "/repos (GET)",
-        "/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])"
+        "/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
+        "/repos/:repo_name:/history (GET)"
       ]
     })
   end
