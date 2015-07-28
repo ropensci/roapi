@@ -6,6 +6,7 @@ DB_DUMP_LOCATION="/tmp/psql_data/roapi.sql"
 echo "*** CREATING DATABASE ***"
 
 gosu postgres postgres --single <<EOSQL
+	CREATE USER sckott SUPERUSER;
   CREATE DATABASE "$DATABASE_NAME";
   GRANT ALL PRIVILEGES ON DATABASE "$DATABASE_NAME" TO sckott;
 EOSQL

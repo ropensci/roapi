@@ -1,5 +1,7 @@
 #!/bin/bash
 
+POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+
 # Remove any versions of running containers first
 docker rm -f -v rogeoip ropostgres roapi ronginx
 
@@ -15,8 +17,7 @@ docker run --name fbgeoip -d allingeek/docker-freegeoip
 
 docker run --name ropostgres \
   --restart=always -d \
-  -v /home/cboettig/data/fishbase:/var/lib/mysql \
-  -e POSTGRES_PASSWORD=root \
+  -e POSTGRES_PASSWORD=POSTGRES_PASSWORD \
   postgres:latest
 
 docker build -t ropensci/roapi:latest .

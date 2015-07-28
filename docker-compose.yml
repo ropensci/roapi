@@ -6,7 +6,7 @@ postgres:
   volumes:
     - ~/data/fishbase:/var/lib/mysql
   environment:
-    POSTGRES_PASSWORD: root
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
 api:
   image: ropensci/roapi:latest
