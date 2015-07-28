@@ -45,7 +45,6 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.17)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
     netrc (0.10.3)
@@ -125,7 +124,6 @@ DEPENDENCIES
   geolocater
   httparty
   json
-  mysql2
   octokit
   pg
   redis
