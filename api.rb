@@ -18,7 +18,7 @@ class ROApp < Sinatra::Application
     $client = PG.connect( dbname: 'roapi' )
   else
     $client = PG.connect(
-      :password => ENV['PSQL_PASSWORD'],
+      :password => ENV['POSTGRES_PASSWORD'],
       :user => "sckott",
       :dbname => "roapi"
     )
