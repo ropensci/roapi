@@ -1,14 +1,14 @@
 #!/bin/bash
 
-DATABASE_NAME="roapi"
 DB_DUMP_LOCATION="/tmp/psql_data/roapi.sql"
 
 echo "*** CREATING DATABASE ***"
 
-gosu postgres postgres --single <<EOSQL
+gosu postgres psql --dbname roapi <<EOSQL
 	CREATE USER sckott SUPERUSER;
-  CREATE DATABASE "$DATABASE_NAME";
-  GRANT ALL PRIVILEGES ON DATABASE "$DATABASE_NAME" TO sckott;
+	DROP DATABASE roapi;
+  CREATE DATABASE roapi;
+  GRANT ALL PRIVILEGES ON DATABASE roapi TO sckott;
 EOSQL
 
 # remove indentation
