@@ -1,24 +1,21 @@
-geoip:
-  image: allingeek/docker-freegeoip
-
 postgres:
   image: postgres:latest
   volumes:
     - ~/data/fishbase:/var/lib/mysql
   environment:
-    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    - POSTGRES_PASSWORD=root
+  restart: always
 
 api:
-  image: ropensci/roapi:latest
+  build: .
   links:
-    - postgres
-    - geoip
+    - postres
 
 nginx:
-  image: nginx:latest
   ports:
-    - "80:80"
+    - 80:80
   links:
     - api
   volumes:
-    - ~/nginx.conf:/etc/nginx/nginx.conf
+    - ./nginx.conf:/etc/nginx/nginx.conf
+  image: nginx
