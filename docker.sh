@@ -15,10 +15,11 @@ docker run --name fbgeoip -d allingeek/docker-freegeoip
 
 ######### FishBase DataBase ##################
 
+docker build -t ropostgres:latest .
 docker run --name ropostgres \
   --restart=always -d \
-  -e POSTGRES_PASSWORD=POSTGRES_PASSWORD \
-  postgres:latest
+  -e POSTGRES_PASSWORD=POSTGRES_PASSWORD POSTGRES_USER=sckott\
+  ropostgres:latest
 
 docker build -t ropensci/roapi:latest .
 #docker pull ropensci/fishbaseapi:latest
