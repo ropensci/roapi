@@ -20,9 +20,6 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.8)
-    geolocater (0.1.0)
-      faraday
-      json
     gh (0.14.0)
       addressable
       backports
@@ -69,7 +66,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rufus-scheduler (3.1.8)
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
@@ -122,13 +118,11 @@ PLATFORMS
 
 DEPENDENCIES
   coveralls
-  geolocater
   httparty
   json
   octokit
   pg
   redis
-  rufus-scheduler
   sinatra
   sinatra-contrib
   travis

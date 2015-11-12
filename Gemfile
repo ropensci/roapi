@@ -1,6 +1,5 @@
 source "http://rubygems.org/"
 
-gem 'geolocater'
 gem 'json'
 gem 'redis'
 gem 'sinatra'
@@ -11,4 +10,3 @@ gem 'coveralls'
 gem 'travis'
 gem 'httparty'
 gem 'pg'
-gem 'rufus-scheduler'
