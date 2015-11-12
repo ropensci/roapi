@@ -9,6 +9,12 @@ require "httparty"
 require "sinatra/multi_route"
 require File.join File.dirname(__FILE__), "roapi_utils"
 
+require 'bundler/setup'
+%w(yaml json csv digest).each { |req| require req }
+Bundler.require(:default)
+
+$config = YAML::load_file(File.join(__dir__, ENV['RACK_ENV'] == 'test' ? 'test_config.yaml' : 'config.yaml'))
+
 class ROApp < Sinatra::Application
   register Sinatra::MultiRoute
 

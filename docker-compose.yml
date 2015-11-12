@@ -1,5 +1,7 @@
 postgres:
   image: postgres:latest
+  ports:
+    - "5432"
   volumes:
     - $HOME/data/roapi:/var/lib/postgresql
   environment:
