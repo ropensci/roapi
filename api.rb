@@ -15,11 +15,11 @@ class ROApp < Sinatra::Application
   # Set up PostgreSQL
   val = ENV['SSH_CLIENT']
   if val.to_s == ''
-    $client = PG.connect( dbname: 'roapi', user: 'sacmac', password: 'root' )
+    $client = PG.connect( dbname: 'roapi', user: 'root', password: 'root' )
   else
     $client = PG.connect(
       :password => "root",
-      :user => "sacmac",
+      :user => "root",
       :dbname => "roapi"
     )
   end
