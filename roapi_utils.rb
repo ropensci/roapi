@@ -66,6 +66,23 @@ def concat_query(name, fields)
   return out
 end
 
+def get_repo_table(table)
+  name = params[:name]
+  fields = params[:fields] || '*'
+  params.delete("fields")
+  fields = check_fields(fields)
+  str = sprintf("SELECT %s FROM %s WHERE name = '%s'", fields, table, name)
+  res = do_query_data(str)
+  return JSON.generate(res)
+end
+
+def get_repo_deps
+  str = sprintf("SELECT * FROM cran WHERE name = '%s'", params[:name])
+  res = do_query_data(str)
+  res['data'][0] = res['data'][0].select { |k,v| k[/depends|imports|suggests|enhances/] }
+  return JSON.generate(res)
+end
+
 def pkg_names
   pkgs1 = do_query_data("SELECT name FROM repos")['data']
   pkgs1.collect{ |x| x.values}.flatten

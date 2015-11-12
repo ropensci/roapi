@@ -5,6 +5,7 @@ require 'coveralls'
 require 'travis'
 require 'httparty'
 require 'time'
+require 'oga'
 # require '/Users/sacmac/github/ropensci/roapi/api.rb'
 # require '/Users/sacmac/github/ropensci/roapi/collectors.rb'
 $ghclient = Octokit::Client.new(:access_token => ENV["GITHUB_TOKEN_ROAPI"])
@@ -306,6 +307,12 @@ def cran(repo)
 	res.delete(:date)
 	return res
 end
+
+# def cran_reverse_deps(x)
+# 	x = HTTParty.get('https://cran.rstudio.com/web/packages/' + x)
+# 	tmp = Oga.parse_html(x).xpath('//table[contains(@summary, "reverse dependencies")]')
+# 	"xxx"
+# end
 
 def proc_imports_helper(obj, keyname)
 	if obj.key?(keyname)

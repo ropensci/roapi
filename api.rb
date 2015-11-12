@@ -15,11 +15,11 @@ class ROApp < Sinatra::Application
   # Set up PostgreSQL
   val = ENV['SSH_CLIENT']
   if val.to_s == ''
-    $client = PG.connect( dbname: 'roapi', user: 'root', password: 'root' )
+    $client = PG.connect( dbname: 'roapi', user: 'sacmac', password: 'root' )
   else
     $client = PG.connect(
       :password => "root",
-      :user => "root",
+      :user => "sacmac",
       :dbname => "roapi"
     )
   end
@@ -108,7 +108,12 @@ class ROApp < Sinatra::Application
         "/heartbeat (GET)",
         "/repos (GET)",
         "/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
-        "/repos/:repo_name:/history (GET)"
+        "/repos/:repo_name:/github (GET)",
+        "/repos/:repo_name:/travis (GET)",
+        "/repos/:repo_name:/appveyor (GET)",
+        "/repos/:repo_name:/cranlogs (GET)",
+        "/repos/:repo_name:/cran (GET)",
+        "/repos/:repo_name:/dependencies (GET)"
       ]
     })
   end
@@ -160,6 +165,38 @@ class ROApp < Sinatra::Application
       res.delete('deleted')
       halt 400
     end
+  end
+
+  # routes to get individual tables
+  get '/repos/:name/github/?' do
+    headers_get
+    get_repo_table('github')
+  end
+
+  get '/repos/:name/travis/?' do
+    headers_get
+    get_repo_table('travis')
+  end
+
+  get '/repos/:name/appveyor/?' do
+    headers_get
+    get_repo_table('appveyor')
+  end
+
+  get '/repos/:name/cranlogs/?' do
+    headers_get
+    get_repo_table('cranlogs')
+  end
+
+  get '/repos/:name/cran/?' do
+    headers_get
+    get_repo_table('cran')
+  end
+
+  # dependencies and reverse dependencies
+  get '/repos/:name/dependencies/?' do
+    headers_get
+    get_repo_deps()
   end
 
   # prevent some HTTP methods
