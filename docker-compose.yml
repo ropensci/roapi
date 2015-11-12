@@ -1,15 +1,16 @@
 postgres:
   image: postgres:latest
   volumes:
-    - ~/data/fishbase:/var/lib/mysql
+    - $HOME/data/roapi:/var/lib/postgresql
   environment:
     - POSTGRES_PASSWORD=root
+    - POSTGRES_USER=root
   restart: always
 
 api:
   build: .
   links:
-    - postres
+    - postgres
 
 nginx:
   ports:

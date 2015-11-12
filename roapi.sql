@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: appveyor; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: appveyor; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE appveyor (
@@ -56,7 +56,7 @@ CREATE TABLE appveyor (
 
 
 --
--- Name: cran; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: cran; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE cran (
@@ -96,7 +96,7 @@ CREATE TABLE cran (
 
 
 --
--- Name: cranlogs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: cranlogs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE cranlogs (
@@ -108,7 +108,7 @@ CREATE TABLE cranlogs (
 
 
 --
--- Name: github; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: github; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE github (
@@ -127,7 +127,7 @@ CREATE TABLE github (
 
 
 --
--- Name: repos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: repos; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE repos (
@@ -151,7 +151,7 @@ CREATE TABLE repos (
 
 
 --
--- Name: travis; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: travis; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE travis (
@@ -837,8 +837,8 @@ COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM sacmac;
-GRANT ALL ON SCHEMA public TO sacmac;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
