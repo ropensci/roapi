@@ -1,18 +1,17 @@
-postgres:
-  image: postgres:latest
+mysql:
+  image: mysql
   ports:
     - "5432"
   volumes:
-    - $HOME/data/roapi:/var/lib/postgresql
+    - $HOME/data/roapi:/var/lib/mysql
   environment:
-    - POSTGRES_PASSWORD=root
-    - POSTGRES_USER=root
+    - MYSQL_ROOT_PASSWORD=root
   restart: always
 
 api:
   build: .
   links:
-    - postgres
+    - mysql
 
 nginx:
   ports:

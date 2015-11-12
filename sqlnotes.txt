@@ -25,6 +25,7 @@ CREATE TABLE repos(
 	route_appveyor	     	VARCHAR(50)
 );
 <!-- COPY repos FROM '/Users/sacmac/github/ropensci/roapi/repos.csv' CSV HEADER; -->
+<!-- mysql: LOAD DATA LOCAL INFILE '/Users/sacmac/github/ropensci/roapi/repos.csv' INTO TABLE repos COLUMNS TERMINATED BY ',' IGNORE 1 LINES; -->
 
 # cranlogs
 CREATE TABLE cranlogs(
