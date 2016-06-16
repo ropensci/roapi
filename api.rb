@@ -7,7 +7,7 @@ require 'pg'
 # require 'travis'
 require "httparty"
 require "sinatra/multi_route"
-require File.join File.dirname(__FILE__), "roapi_utils"
+require_relative "roapi_utils"
 
 class ROApp < Sinatra::Application
   register Sinatra::MultiRoute
@@ -15,11 +15,11 @@ class ROApp < Sinatra::Application
   # Set up PostgreSQL
   val = ENV['SSH_CLIENT']
   if val.to_s == ''
-    $client = PG.connect( dbname: 'roapi', user: 'root', password: 'root' )
+    $client = PG.connect( dbname: 'roapi', user: 'postgres', password: 'root' )
   else
     $client = PG.connect(
       :password => "root",
-      :user => "root",
+      :user => "sacmac",
       :dbname => "roapi"
     )
   end
