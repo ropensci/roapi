@@ -96,3 +96,16 @@ I, [2016-06-04T15:02:01.296761 #12886]  INFO -- : worker=0 ready
 I, [2016-06-04T15:03:08.759468 #12885]  INFO -- : reaped #<Process::Status: pid 12887 exit 0> worker=1
 I, [2016-06-04T15:03:08.759644 #12885]  INFO -- : reaped #<Process::Status: pid 12886 exit 0> worker=0
 I, [2016-06-04T15:03:08.760012 #12885]  INFO -- : master complete
+I, [2016-06-16T21:43:36.945314 #47318]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
+I, [2016-06-16T21:43:36.945648 #47318]  INFO -- : worker=0 spawning...
+I, [2016-06-16T21:43:36.946556 #47318]  INFO -- : worker=1 spawning...
+I, [2016-06-16T21:43:36.947108 #47318]  INFO -- : master process ready
+I, [2016-06-16T21:43:36.947699 #47319]  INFO -- : worker=0 spawned pid=47319
+I, [2016-06-16T21:43:36.948185 #47319]  INFO -- : Refreshing Gem list
+I, [2016-06-16T21:43:36.948138 #47320]  INFO -- : worker=1 spawned pid=47320
+I, [2016-06-16T21:43:36.948483 #47320]  INFO -- : Refreshing Gem list
+I, [2016-06-16T21:43:38.282602 #47319]  INFO -- : worker=0 ready
+I, [2016-06-16T21:43:38.284515 #47320]  INFO -- : worker=1 ready
+I, [2016-06-16T21:44:06.775255 #47318]  INFO -- : reaped #<Process::Status: pid 47320 exit 0> worker=1
+I, [2016-06-16T21:44:06.782837 #47318]  INFO -- : reaped #<Process::Status: pid 47319 exit 0> worker=0
+I, [2016-06-16T21:44:06.782976 #47318]  INFO -- : master complete

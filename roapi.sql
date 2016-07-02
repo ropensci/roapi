@@ -132,7 +132,7 @@ CREATE TABLE github (
 
 CREATE TABLE repos (
     name character varying(50) NOT NULL,
-    type character varying(50) NOT NULL,
+    repo_type character varying(50) NOT NULL,
     maintainer character varying(50) NOT NULL,
     email character varying(50) NOT NULL,
     status character varying(50) NOT NULL,
@@ -692,7 +692,7 @@ COPY github (id, name, created_at, updated_at, size, language, forks, open_issue
 -- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY repos (name, type, maintainer, email, status, installable, build_vignettes, category, on_cran, cran_archived, url, root, fork, description, route_github_travis, route_appveyor) FROM stdin;
+COPY repos (name, repo_type, maintainer, email, status, installable, build_vignettes, category, on_cran, cran_archived, url, root, fork, description, route_github_travis, route_appveyor) FROM stdin;
 alm	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	altmetrics	t	f	https://github.com/ropensci/alm	\N	f	R wrapper to the almetrics API platform developed by PLoS  API -other publishers have built on this and work out of the box: CrossRef, Copernicus Publishers, and the Public Knowledge Project (PKP)	ropensci/alm	sckott/alm
 AntWeb	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/AntWeb	\N	f	Access data from the world's largest ant database. Maintained and developed by the California Academy of Science	ropensci/AntWeb	karthik/AntWeb
 aRxiv	package	Karl Broman	kbroman@biostat.wisc.edu	good	t	t	literature	t	f	https://github.com/ropensci/aRxiv	\N	f	Access to the aRxiv preprint repository	ropensci/aRxiv	karthik/aRxiv
@@ -837,8 +837,8 @@ COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM root;
-GRANT ALL ON SCHEMA public TO root;
+REVOKE ALL ON SCHEMA public FROM sacmac;
+GRANT ALL ON SCHEMA public TO sacmac;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 

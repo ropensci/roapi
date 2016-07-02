@@ -7,30 +7,33 @@ require 'pg'
 # require 'travis'
 require "httparty"
 require "sinatra/multi_route"
-require_relative "roapi_utils"
+require 'yaml'
+require 'active_record'
+
+require_relative 'models/models'
+require_relative 'models/methods'
+#require_relative "roapi_utils"
+
+$config = YAML::load_file(File.join(__dir__, 'config.yaml'))
+
+ActiveSupport::Deprecation.silenced = true
+val = ENV['SSH_CLIENT']
+if val.to_s == ''
+  ActiveRecord::Base.establish_connection($config['db']['localhost'])
+else
+  ActiveRecord::Base.establish_connection($config['db']['ec2'])
+end
 
 class ROApp < Sinatra::Application
   register Sinatra::MultiRoute
 
-  # Set up PostgreSQL
-  val = ENV['SSH_CLIENT']
-  if val.to_s == ''
-    $client = PG.connect( dbname: 'roapi', user: 'postgres', password: 'root' )
-  else
-    $client = PG.connect(
-      :password => "root",
-      :user => "sacmac",
-      :dbname => "roapi"
-    )
-  end
-
   # before do
   #   # puts '[ENV]'
-  #   # p ENV['ROAPI_USER']
-  #   # puts '[Params]'
-  #   # p params
-  #   puts '[body]'
-  #   p JSON.parse(request.body.read)
+  #   # p ENV
+  #   puts '[Params]'
+  #   p params
+  #   # puts '[body]'
+  #   # p JSON.parse(request.body.read)
   # end
 
   ## configuration
@@ -40,9 +43,9 @@ class ROApp < Sinatra::Application
   end
 
   # halt: error helpers
-  error 400 do
-    halt 400, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'malformed request' })
-  end
+  # error 400 do
+  #   halt 400, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'malformed request' })
+  # end
 
   error 401 do
     halt 401, {'Content-Type' => 'application/json'}, JSON.generate({ 'error' => 'unauthorized' })
@@ -107,96 +110,158 @@ class ROApp < Sinatra::Application
         "/docs (GET)",
         "/heartbeat (GET)",
         "/repos (GET)",
-        "/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
+        #{}"/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
         "/repos/:repo_name:/github (GET)",
         "/repos/:repo_name:/travis (GET)",
         "/repos/:repo_name:/appveyor (GET)",
         "/repos/:repo_name:/cranlogs (GET)",
         "/repos/:repo_name:/cran (GET)",
-        "/repos/:repo_name:/dependencies (GET)"
+        "/repos/:repo_name:/dependencies (GET)",
+        "/repos/:repo_name:/citations (GET)",
+        "/repos/:repo_name:/groupings (GET)",
+        "/repos/:repo_name:/categories (GET)",
+        "/categories (GET)",
+        "/groupings (GET)"
       ]
     })
   end
 
-  get '/repos/?:name?/?' do
-    headers_get
-    get_repo()
-  end
-
-  # auth required for post, put, delete
-  # post '/testauth/?' do
-  #   protected!
-  #   headers_auth
-  #   return JSON.generate({ 'message' => 'nice work' })
-  # end
-
-  post '/repos/:name/?' do
-    protected!
-    headers_auth
-    res = add_repo()
-    if res.result_status == 1
-      status 201
-      body JSON.generate({ "message" => "created" })
-    else
-      halt 400
-    end
-  end
-
-  put '/repos/:name/?' do
-    protected!
-    headers_auth
-    res = edit_repo()
-    if res.result_status == 1
-      status 201
-      body JSON.generate({ "message" => "record modified" })
-    else
-      halt 400
-    end
-  end
-
-  delete '/repos/:name/?' do
-    protected!
-    headers_auth
-    res = delete_repo()
-    if res['deleted']
-      status 204
-      body ''
-    else
-      res.delete('deleted')
-      halt 400
+  get '/repos/?:name?' do
+    begin
+      data = get_repo(params)
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
     end
   end
 
   # routes to get individual tables
   get '/repos/:name/github/?' do
     headers_get
-    get_repo_table('github')
+    begin
+      data = get_repo_table('github')
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   get '/repos/:name/travis/?' do
     headers_get
-    get_repo_table('travis')
+    begin
+      data = get_repo_table('travis')
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   get '/repos/:name/appveyor/?' do
     headers_get
-    get_repo_table('appveyor')
+    begin
+      data = get_repo_table('appveyor')
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   get '/repos/:name/cranlogs/?' do
     headers_get
-    get_repo_table('cranlogs')
+    begin
+      data = get_repo_table('cranlogs')
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   get '/repos/:name/cran/?' do
     headers_get
-    get_repo_table('cran')
+    begin
+      data = get_repo_table('cran')
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   # dependencies and reverse dependencies
   get '/repos/:name/dependencies/?' do
     headers_get
-    get_repo_deps()
+    begin
+      data = get_repo_deps()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+  # citations
+  get '/repos/:name/citations/?' do
+    headers_get
+    begin
+      data = get_repo_citations()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+
+  # groupings
+  get '/repos/:name/groupings/?' do
+    headers_get
+    begin
+      data = get_repo_groupings()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+  get '/groupings/:grouping/?' do
+    headers_get
+    begin
+      data = get_groupings()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+
+  # categories
+  get '/repos/:name/categories/?' do
+    headers_get
+    begin
+      data = get_repo_categories()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+  get '/categories/:category/?' do
+    headers_get
+    begin
+      data = get_categories()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
   end
 
   # prevent some HTTP methods
