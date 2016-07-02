@@ -59,7 +59,7 @@ CREATE TABLE appveyor (
 );
 
 
-ALTER TABLE appveyor OWNER TO sacmac;
+ALTER TABLE appveyor OWNER TO ubuntu;
 
 --
 -- Name: categories; Type: TABLE; Schema: public; Owner: -
@@ -71,7 +71,7 @@ CREATE TABLE categories (
 );
 
 
-ALTER TABLE categories OWNER TO sacmac;
+ALTER TABLE categories OWNER TO ubuntu;
 
 --
 -- Name: citations; Type: TABLE; Schema: public; Owner: -
@@ -84,7 +84,7 @@ CREATE TABLE citations (
 );
 
 
-ALTER TABLE citations OWNER TO sacmac;
+ALTER TABLE citations OWNER TO ubuntu;
 
 --
 -- Name: cran; Type: TABLE; Schema: public; Owner: -
@@ -126,7 +126,7 @@ CREATE TABLE cran (
 );
 
 
-ALTER TABLE cran OWNER TO sacmac;
+ALTER TABLE cran OWNER TO ubuntu;
 
 --
 -- Name: cranlogs; Type: TABLE; Schema: public; Owner: -
@@ -140,7 +140,7 @@ CREATE TABLE cranlogs (
 );
 
 
-ALTER TABLE cranlogs OWNER TO sacmac;
+ALTER TABLE cranlogs OWNER TO ubuntu;
 
 --
 -- Name: github; Type: TABLE; Schema: public; Owner: -
@@ -161,7 +161,7 @@ CREATE TABLE github (
 );
 
 
-ALTER TABLE github OWNER TO sacmac;
+ALTER TABLE github OWNER TO ubuntu;
 
 --
 -- Name: groupings; Type: TABLE; Schema: public; Owner: -
@@ -173,7 +173,7 @@ CREATE TABLE groupings (
 );
 
 
-ALTER TABLE groupings OWNER TO sacmac;
+ALTER TABLE groupings OWNER TO ubuntu;
 
 --
 -- Name: repos; Type: TABLE; Schema: public; Owner: -
@@ -198,7 +198,7 @@ CREATE TABLE repos (
 );
 
 
-ALTER TABLE repos OWNER TO sacmac;
+ALTER TABLE repos OWNER TO ubuntu;
 
 --
 -- Name: travis; Type: TABLE; Schema: public; Owner: -
@@ -223,7 +223,7 @@ CREATE TABLE travis (
 );
 
 
-ALTER TABLE travis OWNER TO sacmac;
+ALTER TABLE travis OWNER TO ubuntu;
 
 --
 -- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: -
