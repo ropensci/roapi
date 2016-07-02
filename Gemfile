@@ -10,3 +10,5 @@ gem 'coveralls'
 gem 'travis'
 gem 'httparty'
 gem 'pg'
+gem 'activerecord'
+

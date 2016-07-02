@@ -7,29 +7,28 @@ CREATE DATABASE roregistry;
 # repos
 <!-- DROP TABLE repos; -->
 CREATE TABLE repos(
-	name           				VARCHAR(50)    NOT NULL,
-	type           				VARCHAR(50)    NOT NULL,
-	maintainer     				VARCHAR(50)    NOT NULL,
-	email          				VARCHAR(50)    NOT NULL,
-	status         				VARCHAR(50)    NOT NULL,
-	installable    				bool           NOT NULL,
-	build_vignettes 			bool					 NOT NULL,
-	category       				VARCHAR(50)    NOT NULL,
-	on_cran        				bool           NOT NULL,
+	name           				VARCHAR(50) NOT NULL,
+	repo_type           		VARCHAR(50) NOT NULL,
+	maintainer     				VARCHAR(50) NOT NULL,
+	email          				VARCHAR(50) NOT NULL,
+	status         				VARCHAR(50) NOT NULL,
+	installable    				bool NOT NULL,
+	on_cran        				bool NOT NULL,
 	cran_archived  				bool,
-	url            				VARCHAR(50)    NOT NULL,
+	url            				VARCHAR(50) NOT NULL,
 	root           				VARCHAR(50),
-	fork           				bool           NOT NULL,
+	fork           				bool NOT NULL,
 	description    				text,
-	route_github_travis  	VARCHAR(50),
-	route_appveyor	     	VARCHAR(50)
+	build_vignettes 			bool NOT NULL,
+	route_github_travis  		VARCHAR(50),
+	route_appveyor	     		VARCHAR(50)
 );
-<!-- COPY repos FROM '/Users/sacmac/github/ropensci/roapi/repos.csv' CSV HEADER; -->
+<!-- COPY repos FROM '/Users/sacmac/github/ropensci/roapi/data/repos_new.csv' CSV HEADER; -->
 <!-- mysql: LOAD DATA LOCAL INFILE '/Users/sacmac/github/ropensci/roapi/repos.csv' INTO TABLE repos COLUMNS TERMINATED BY ',' IGNORE 1 LINES; -->
 
 # cranlogs
 CREATE TABLE cranlogs(
-	name            VARCHAR(50)    NOT NULL,
+	name            VARCHAR(50)  NOT NULL,
 	cran_downloads  integer,
 	collected       timestamp,
 	inserted	    timestamp
@@ -127,4 +126,26 @@ CREATE TABLE appveyor(
 	inserted timestamp
 );
 
-# setup relations, if using
+# groupings
+CREATE TABLE groupings(
+	name VARCHAR(50),
+	grouping VARCHAR(50)
+);
+<!-- grouping: a higher level grouping for pkgs, like "text mining", "geospatial", etc. -->
+<!-- COPY groupings FROM '/Users/sacmac/github/ropensci/roapi/data/groupings.csv' CSV HEADER; -->
+
+# categories
+CREATE TABLE categories(
+	name VARCHAR(50),
+	category VARCHAR(100)
+);
+<!-- category: smaller categories, many per pkg, like "literature", "api" -->
+<!-- COPY categories FROM '/Users/sacmac/github/ropensci/roapi/data/categories.csv' CSV HEADER; -->
+
+# citations
+CREATE TABLE citations(
+	name VARCHAR(50),
+	doi VARCHAR(100),
+	citation VARCHAR(2000)	
+);
+<!-- COPY citations FROM '/Users/sacmac/github/ropensci/roapi/data/citations.csv' CSV HEADER; -->

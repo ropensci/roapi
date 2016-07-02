@@ -1,0 +1,111 @@
+I, [2015-11-12T22:46:54.409504 #13205]  INFO -- : reaped #<Process::Status: pid 13207 exit 0> worker=1
+I, [2015-11-12T22:46:54.409664 #13205]  INFO -- : reaped #<Process::Status: pid 13206 exit 0> worker=0
+I, [2015-11-12T22:46:54.409995 #13205]  INFO -- : master complete
+I, [2015-11-12T22:46:55.289934 #13241]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
+I, [2015-11-12T22:46:55.290053 #13241]  INFO -- : worker=0 spawning...
+I, [2015-11-12T22:46:55.290814 #13241]  INFO -- : worker=1 spawning...
+I, [2015-11-12T22:46:55.291366 #13241]  INFO -- : master process ready
+I, [2015-11-12T22:46:55.291987 #13242]  INFO -- : worker=0 spawned pid=13242
+I, [2015-11-12T22:46:55.292278 #13243]  INFO -- : worker=1 spawned pid=13243
+I, [2015-11-12T22:46:55.292491 #13242]  INFO -- : Refreshing Gem list
+I, [2015-11-12T22:46:55.292628 #13243]  INFO -- : Refreshing Gem list
+I, [2015-11-12T22:46:55.585075 #13243]  INFO -- : worker=1 ready
+I, [2015-11-12T22:46:55.586206 #13242]  INFO -- : worker=0 ready
+127.0.0.1 - - [12/Nov/2015:22:47:03 -0800] "GET /repos/taxize HTTP/1.1" 200 987 0.0334
+127.0.0.1 - - [12/Nov/2015:22:47:20 -0800] "GET /repos/taxize HTTP/1.1" 200 987 0.0035
+127.0.0.1 - - [12/Nov/2015:22:47:21 -0800] "GET /repos/taxize HTTP/1.1" 200 987 0.0030
+127.0.0.1 - - [12/Nov/2015:22:47:22 -0800] "GET /repos/taxize HTTP/1.1" 200 987 0.0381
+I, [2015-11-12T22:51:02.697237 #13241]  INFO -- : reaped #<Process::Status: pid 13243 exit 0> worker=1
+I, [2015-11-12T22:51:02.697974 #13241]  INFO -- : reaped #<Process::Status: pid 13242 exit 0> worker=0
+I, [2015-11-12T22:51:02.699054 #13241]  INFO -- : master complete
+I, [2015-11-19T21:56:01.650082 #13682]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
+I, [2015-11-19T21:56:01.650251 #13682]  INFO -- : worker=0 spawning...
+I, [2015-11-19T21:56:01.651571 #13682]  INFO -- : worker=1 spawning...
+I, [2015-11-19T21:56:01.652263 #13682]  INFO -- : master process ready
+I, [2015-11-19T21:56:01.653142 #13683]  INFO -- : worker=0 spawned pid=13683
+I, [2015-11-19T21:56:01.653688 #13683]  INFO -- : Refreshing Gem list
+I, [2015-11-19T21:56:01.653711 #13684]  INFO -- : worker=1 spawned pid=13684
+I, [2015-11-19T21:56:01.654132 #13684]  INFO -- : Refreshing Gem list
+I, [2015-11-19T21:56:02.025151 #13683]  INFO -- : worker=0 ready
+I, [2015-11-19T21:56:02.025151 #13684]  INFO -- : worker=1 ready
+127.0.0.1 - - [19/Nov/2015:21:56:05 -0500] "GET / HTTP/1.1" 302 - 0.0235
+127.0.0.1 - - [19/Nov/2015:21:56:05 -0500] "GET /heartbeat HTTP/1.1" 200 384 0.0011
+127.0.0.1 - - [19/Nov/2015:21:56:07 -0500] "GET /repos HTTP/1.1" 200 131173 0.2826
+127.0.0.1 - - [19/Nov/2015:21:56:09 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0032
+127.0.0.1 - - [19/Nov/2015:21:56:16 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0030
+127.0.0.1 - - [19/Nov/2015:21:56:58 -0500] "GET /?= HTTP/1.1" 302 - 0.0011
+127.0.0.1 - - [19/Nov/2015:21:56:58 -0500] "GET /heartbeat HTTP/1.1" 200 384 0.0009
+127.0.0.1 - - [19/Nov/2015:21:57:14 -0500] "GET /?= HTTP/1.1" 302 - 0.0182
+127.0.0.1 - - [19/Nov/2015:21:57:14 -0500] "GET /heartbeat HTTP/1.1" 200 384 0.0017
+127.0.0.1 - - [19/Nov/2015:21:57:30 -0500] "GET /repos/taxize?= HTTP/1.1" 200 987 0.0043
+127.0.0.1 - - [19/Nov/2015:21:57:49 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0084
+127.0.0.1 - - [19/Nov/2015:21:59:20 -0500] "GET /repos/taxize/cranadf?= HTTP/1.1" 404 27 0.0015
+127.0.0.1 - - [19/Nov/2015:22:00:21 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0036
+127.0.0.1 - - [19/Nov/2015:22:00:23 -0500] "GET /repos/taxize/cranadf?= HTTP/1.1" 404 27 0.0010
+127.0.0.1 - - [19/Nov/2015:22:00:47 -0500] "GET /repos/taxize/cranadf?= HTTP/1.1" 404 27 0.0009
+127.0.0.1 - - [19/Nov/2015:22:01:46 -0500] "GET /repos/taxize/cranadf?= HTTP/1.1" 404 27 0.0018
+127.0.0.1 - - [19/Nov/2015:22:07:04 -0500] "GET /repos/taxize/cranasdfadsf?= HTTP/1.1" 404 27 0.0029
+127.0.0.1 - - [19/Nov/2015:22:07:12 -0500] "GET /repos/taxize/cranasdfadsf?= HTTP/1.1" 404 27 0.0012
+127.0.0.1 - - [19/Nov/2015:22:07:49 -0500] "GET /repos/taxize/cranasdfadsf?= HTTP/1.1" 404 27 0.0018
+127.0.0.1 - - [19/Nov/2015:22:07:59 -0500] "GET /repos/taxize/cranasdfadsf?= HTTP/1.1" 404 27 0.0012
+127.0.0.1 - - [19/Nov/2015:22:08:08 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0023
+127.0.0.1 - - [19/Nov/2015:22:09:35 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0038
+127.0.0.1 - - [19/Nov/2015:22:10:52 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0029
+127.0.0.1 - - [19/Nov/2015:22:10:56 -0500] "GET /repos/taxize/craadfn?= HTTP/1.1" 404 27 0.0014
+127.0.0.1 - - [19/Nov/2015:22:11:16 -0500] "PUT / HTTP/1.1" 404 27 0.0015
+127.0.0.1 - - [19/Nov/2015:22:11:24 -0500] "PUT / HTTP/1.1" 404 27 0.0015
+127.0.0.1 - - [19/Nov/2015:22:11:29 -0500] "PUT /repos HTTP/1.1" 404 27 0.0032
+127.0.0.1 - - [19/Nov/2015:22:11:32 -0500] "PUT /repos/taxize HTTP/1.1" 401 24 0.0059
+127.0.0.1 - - [19/Nov/2015:22:16:49 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0024
+127.0.0.1 - - [19/Nov/2015:22:16:52 -0500] "GET /repos/taxize/cran?= HTTP/1.1" 200 2051 0.0022
+127.0.0.1 - - [19/Nov/2015:22:42:25 -0500] "GET /?= HTTP/1.1" 302 - 0.0021
+127.0.0.1 - - [19/Nov/2015:22:42:25 -0500] "GET /heartbeat HTTP/1.1" 200 384 0.0013
+127.0.0.1 - - [19/Nov/2015:22:43:11 -0500] "GET /Adf HTTP/1.1" 404 27 0.0012
+127.0.0.1 - - [19/Nov/2015:22:44:25 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0068
+127.0.0.1 - - [19/Nov/2015:22:45:06 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0037
+127.0.0.1 - - [19/Nov/2015:22:45:23 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0029
+127.0.0.1 - - [19/Nov/2015:22:45:27 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0037
+127.0.0.1 - - [19/Nov/2015:22:45:54 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0029
+127.0.0.1 - - [19/Nov/2015:22:46:04 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0047
+127.0.0.1 - - [19/Nov/2015:22:46:09 -0500] "GET /repos/taxize?= HTTP/1.1" 200 987 0.0042
+127.0.0.1 - - [19/Nov/2015:22:47:09 -0500] "GET /?= HTTP/1.1" 302 - 0.0031
+127.0.0.1 - - [19/Nov/2015:22:47:09 -0500] "GET /heartbeat HTTP/1.1" 200 384 0.0017
+127.0.0.1 - - [19/Nov/2015:22:47:35 -0500] "GET /repos/asdfasdf?= HTTP/1.1" 200 105 0.0039
+127.0.0.1 - - [19/Nov/2015:23:03:17 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0037
+127.0.0.1 - - [19/Nov/2015:23:08:41 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0050
+127.0.0.1 - - [19/Nov/2015:23:10:09 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0038
+127.0.0.1 - - [19/Nov/2015:23:10:47 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0040
+127.0.0.1 - - [19/Nov/2015:23:11:28 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0035
+127.0.0.1 - - [19/Nov/2015:23:11:50 -0500] "GET /repos/taxize HTTP/1.1" 200 987 0.0030
+127.0.0.1 - - [19/Nov/2015:23:12:52 -0500] "GET /repos/taxize/cran HTTP/1.1" 200 2051 0.0035
+127.0.0.1 - - [19/Nov/2015:23:12:57 -0500] "GET /repos/taxize/cran HTTP/1.1" 200 2051 0.0028
+127.0.0.1 - - [19/Nov/2015:23:13:18 -0500] "GET /repos HTTP/1.1" 200 131173 0.2108
+I, [2015-11-19T23:24:20.617997 #13682]  INFO -- : reaped #<Process::Status: pid 13684 exit 0> worker=1
+I, [2015-11-19T23:24:20.626649 #13682]  INFO -- : reaped #<Process::Status: pid 13683 exit 0> worker=0
+I, [2015-11-19T23:24:20.627296 #13682]  INFO -- : master complete
+I, [2016-06-04T15:02:00.849057 #12885]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
+I, [2016-06-04T15:02:00.849396 #12885]  INFO -- : worker=0 spawning...
+I, [2016-06-04T15:02:00.850259 #12885]  INFO -- : worker=1 spawning...
+I, [2016-06-04T15:02:00.851211 #12885]  INFO -- : master process ready
+I, [2016-06-04T15:02:00.851586 #12886]  INFO -- : worker=0 spawned pid=12886
+I, [2016-06-04T15:02:00.852176 #12886]  INFO -- : Refreshing Gem list
+I, [2016-06-04T15:02:00.852047 #12887]  INFO -- : worker=1 spawned pid=12887
+I, [2016-06-04T15:02:00.852633 #12887]  INFO -- : Refreshing Gem list
+I, [2016-06-04T15:02:01.296736 #12887]  INFO -- : worker=1 ready
+I, [2016-06-04T15:02:01.296761 #12886]  INFO -- : worker=0 ready
+I, [2016-06-04T15:03:08.759468 #12885]  INFO -- : reaped #<Process::Status: pid 12887 exit 0> worker=1
+I, [2016-06-04T15:03:08.759644 #12885]  INFO -- : reaped #<Process::Status: pid 12886 exit 0> worker=0
+I, [2016-06-04T15:03:08.760012 #12885]  INFO -- : master complete
+I, [2016-06-16T21:43:36.945314 #47318]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
+I, [2016-06-16T21:43:36.945648 #47318]  INFO -- : worker=0 spawning...
+I, [2016-06-16T21:43:36.946556 #47318]  INFO -- : worker=1 spawning...
+I, [2016-06-16T21:43:36.947108 #47318]  INFO -- : master process ready
+I, [2016-06-16T21:43:36.947699 #47319]  INFO -- : worker=0 spawned pid=47319
+I, [2016-06-16T21:43:36.948185 #47319]  INFO -- : Refreshing Gem list
+I, [2016-06-16T21:43:36.948138 #47320]  INFO -- : worker=1 spawned pid=47320
+I, [2016-06-16T21:43:36.948483 #47320]  INFO -- : Refreshing Gem list
+I, [2016-06-16T21:43:38.282602 #47319]  INFO -- : worker=0 ready
+I, [2016-06-16T21:43:38.284515 #47320]  INFO -- : worker=1 ready
+I, [2016-06-16T21:44:06.775255 #47318]  INFO -- : reaped #<Process::Status: pid 47320 exit 0> worker=1
+I, [2016-06-16T21:44:06.782837 #47318]  INFO -- : reaped #<Process::Status: pid 47319 exit 0> worker=0
+I, [2016-06-16T21:44:06.782976 #47318]  INFO -- : master complete

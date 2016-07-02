@@ -1,9 +1,5 @@
-require 'rubygems'
-require 'sinatra'
-require 'json'
-require 'pg'
-require "sinatra/multi_route"
+require_relative 'api'
 
-require File.join( File.dirname(__FILE__), 'api.rb')
-
-run ROApp
+map '/' do
+  run ROApp
+end

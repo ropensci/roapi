@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.4.5
+-- Dumped by pg_dump version 9.5.3
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -30,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: appveyor; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: appveyor; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE appveyor (
@@ -55,8 +59,35 @@ CREATE TABLE appveyor (
 );
 
 
+ALTER TABLE appveyor OWNER TO ubuntu;
+
 --
--- Name: cran; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE categories (
+    name character varying(50),
+    category character varying(100)
+);
+
+
+ALTER TABLE categories OWNER TO ubuntu;
+
+--
+-- Name: citations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE citations (
+    name character varying(50),
+    doi character varying(100),
+    citation character varying(2000)
+);
+
+
+ALTER TABLE citations OWNER TO ubuntu;
+
+--
+-- Name: cran; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cran (
@@ -95,8 +126,10 @@ CREATE TABLE cran (
 );
 
 
+ALTER TABLE cran OWNER TO ubuntu;
+
 --
--- Name: cranlogs; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: cranlogs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cranlogs (
@@ -107,8 +140,10 @@ CREATE TABLE cranlogs (
 );
 
 
+ALTER TABLE cranlogs OWNER TO ubuntu;
+
 --
--- Name: github; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: github; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE github (
@@ -126,8 +161,22 @@ CREATE TABLE github (
 );
 
 
+ALTER TABLE github OWNER TO ubuntu;
+
 --
--- Name: repos; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: groupings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE groupings (
+    name character varying(50),
+    "grouping" character varying(50)
+);
+
+
+ALTER TABLE groupings OWNER TO ubuntu;
+
+--
+-- Name: repos; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE repos (
@@ -137,21 +186,22 @@ CREATE TABLE repos (
     email character varying(50) NOT NULL,
     status character varying(50) NOT NULL,
     installable boolean NOT NULL,
-    build_vignettes boolean NOT NULL,
-    category character varying(50) NOT NULL,
     on_cran boolean NOT NULL,
     cran_archived boolean,
     url character varying(50) NOT NULL,
     root character varying(50),
     fork boolean NOT NULL,
     description text,
+    build_vignettes boolean NOT NULL,
     route_github_travis character varying(50),
     route_appveyor character varying(50)
 );
 
 
+ALTER TABLE repos OWNER TO ubuntu;
+
 --
--- Name: travis; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: travis; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE travis (
@@ -172,6 +222,8 @@ CREATE TABLE travis (
     inserted timestamp without time zone
 );
 
+
+ALTER TABLE travis OWNER TO ubuntu;
 
 --
 -- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: -
@@ -221,6 +273,376 @@ COPY appveyor (projectid, accountid, accountname, name, repositoryname, reposito
 42987	13586	sckott	treeBASE	ropensci/treeBASE	master	2014-08-12 04:50:15.308663	2014-10-13 14:56:48.117459	1156079	356	1.0.356	update cran testing	master	0629628cc85570cb2beef3bf446bdb67cbae5bd0	Carl Boettiger	failed	2015-07-27 10:39:56.700024	2015-07-28 00:14:28
 110247	14651	EDiLD	webchem	ropensci/webchem	master	2015-04-06 20:13:39.719037	\N	1035095	53	1.0.53	ignore README_files	master	0648bf2e8a991b5df7b8867afcc67281e386b9ed	edisz	success	2015-07-02 13:08:47.633542	2015-07-28 00:14:28
 102884	13586	sckott	wellknown	ropensci/wellknown	master	2015-03-14 07:00:59.21248	2015-03-14 07:01:07.959381	1156072	171	1.0.171	no longer need to install leaflet from github for CI	master	83e26931c84836be7f8f7057ba04ebb5213757d0	Scott Chamberlain	success	2015-07-27 10:05:50.313052	2015-07-28 00:14:28
+\.
+
+
+--
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY categories (name, category) FROM stdin;
+alm	altmetrics
+AntWeb	biology
+aRxiv	literature
+bmc	literature
+bold	biology
+citeulike	altmetrics
+clifro	biology
+dependencies	infrastructure
+dvn	publication
+ecoengine	biology
+ecoretriever	biology
+elastic	infrastructure
+elastic	databases
+elife	literature
+EML	publication
+floras	biology
+fulltext	literature
+geojsonio	visualization
+gender	history
+geonames	infrastructure
+gigadb	literature
+gistr	reproducibility
+git2r	reproducibility
+gitr	reproducibility
+historydata	history
+ICES	biology
+IEEER	literature
+mdextract	biology
+mocker	infrastructure
+neotoma	biology
+ots	biology
+paleobioDB	biology
+pangaear	biology
+pleiades	archeology
+plotly	visualization
+prism	biology
+rAltmetric	altmetrics
+rAvis	biology
+rbhl	biology
+rbison	biology
+rcrossref	biology
+RCryptsy	biology
+rDat	infrastructure
+rDat	databases
+rdatacite	biology
+rdataone	biology
+rdryad	biology
+rebi	literature
+rebird	biology
+rentrez	biology
+Reol	biology
+rfigshare	literature
+rfigshare	databases
+rfishbase	biology
+rfisheries	biology
+rflybase	biology
+rgauges	analytics
+rgbif	biology
+rglobi	biology
+rgpdd	biology
+rhindawi	literature
+rImpactStory	altmetrics
+rinat	biology
+ritis	biology
+RMendeley	literature
+rmetadata	literature
+RMETAR	biology
+rnbn	biology
+RNeXML	biology
+rnoaa	biology
+rnpn	biology
+rOBIS	biology
+rorcid	literature
+rpensoft	literature
+rplos	literature
+rpmc	literature
+rpwt	publication
+rpwt	literature
+RSelenium	infrastructure
+rsnps	biology
+rspringer	literature
+rvertnet	biology
+rWBclimate	biology
+sandbox	biology
+sheetseeR	biology
+solr	infrastructure
+solr	databases
+spocc	biology
+taxize	biology
+testdat	infrastructure
+traits	biology
+treebase	biology
+ucipp computer	science
+USAboundaries	history
+USAboundaries	maps
+USAboundariesData	history
+USAboundariesData	maps
+zenodo	literature
+chromer	biology
+ckanr	infrastructure
+ckanr	databases
+dashboard	biology
+ggit	reproducibility
+musemeta	history
+rdpla	history
+redland-bindings	biology
+redland-bindings	infrastructure
+redland-bindings	databases
+rerddap	biology
+rerddap	infrastructure
+rerddap	databases
+reuropeana	history
+rGEM	economics
+RStars	astronomy
+taxizesoap	biology
+webmockr	infrastructure
+binomen	taxonomy
+binomen	biology
+cartographer	maps
+csl	literature
+elasticdsl	databases
+etseed	databases
+finch	ecology
+genderdata	history
+hathi	literature
+hathi	history
+internetarchive	history
+internetarchive	literature
+jqr	utilities
+lawn	maps
+nodbi	databases
+opencontext	archeology
+parasiteR	biology
+parasiteR	ecology
+proj	maps
+rchie	literature
+rdopa	ecology
+RedisAPI	databases
+rif	neuroscience
+rrlite	databases
+sofa	databases
+webchem	chemistry
+wellknown	maps
+rotl	biology
+rotl	data
+ropkgs	infrastructure
+rusda	biology
+rusda	data
+oai	literature
+oai	data
+apipkgen	utilities
+apipkgen	infrastructure
+appl	statistics
+aspacer	literature
+aspacer	data
+atomize	infrastructure
+atomize	utilities
+brranching	literature
+brranching	data
+ccafs	data
+ccafs	ecology
+ccafs	conservation
+cmip	data
+cmip	ecology
+cmip	conservation
+colorpiler	utilities
+convertr	utilities
+convertr	infrastructure
+cored	literature
+cored	data
+cored	web
+datapack	utilities
+datapack	infrastructure
+datapack	data
+datapkg	utilities
+datapkg	infrastructure
+datapkg	data
+dirdf	utilities
+dirdf	infrastructure
+eechidna	political
+eechidna	data
+gdoc	data
+geoaxe	geospatial
+geoaxe	data
+geojson	geospatial
+geojson	data
+geojsonlint	geospatial
+geojsonlint	data
+geolocart	literature
+geolocart	data
+geolocart	geospatial
+geoops	geospatial
+geoops	data
+getlandsat	geospatial
+getlandsat	data
+gtfsr	transportation
+gtfsr	data
+gutenbergr	literature
+gutenbergr	data
+hunspell	literature
+hunspell	utilities
+hunspell	infrastructure
+jsonvalidate	utilities
+jsonvalidate	data
+jsonvalidate	infrastructure
+mapr	maps
+mapr	visualization
+mregions	conservation
+mregions	data
+mregions	ecology
+opencage	transportation
+opencage	data
+opencage	web
+originr	conservation
+originr	data
+originr	ecology
+osmplotr	maps
+osmplotr	data
+osmplotr	visualization
+pdftools	literature
+pdftools	data
+pdftools	utilities
+pdftools	infrastructure
+rgeospatialquality	geospatial
+rgeospatialquality	data
+rgeospatialquality	web
+riodata	transportation
+riodata	data
+robotstxt	web
+robotstxt	utilities
+robotstxt	infrastructure
+ropenaq	environmental
+ropenaq	data
+rredlist	conservation
+rredlist	data
+rredlist	ecology
+rwdpa	ecology
+rwdpa	data
+rwdpa	conservation
+scrubr	ecology
+scrubr	data
+snowball	infrastructure
+snowball	utilities
+solrium	databases
+solrium	data
+solrium	infrastructure
+spenv	biology
+spenv	ecology
+spenv	data
+spenv	environmental
+splister	biology
+splister	ecology
+splister	data
+spplist	biology
+spplist	ecology
+spplist	data
+spplit	biology
+spplit	ecology
+spplit	data
+spplit	literature
+stplanr	data
+taxa	taxonomy
+taxa	data
+taxizedb	taxonomy
+taxizedb	data
+taxizedb	databases
+urltemplate	infrastructure
+urltemplate	utilities
+vcr	testing
+vcr	infrastructure
+vcr	utilities
+dissem	literature
+sparqldsl	dsl
+sparqldsl	utilities
+riem	testing
+riem	infrastructure
+riem	utilities
+\.
+
+
+--
+-- Data for Name: citations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY citations (name, doi, citation) FROM stdin;
+rgbif	10.1093/biosci/biw022	Amano, T., Lamming, J. D. L., & Sutherland, W. J. (2016). Spatial Gaps in Global Biodiversity Information and the Role of Citizen Science. BioScience, 66(5), 393–400. doi:10.1093/biosci/biw022
+taxize	10.1017/s0960428615000256	Baden, H. M., Särkinen, T., Conde, D. A., Matthews, A. C., Vandrot, H., Chicas, S., … Harris, D. J. (2015). A BOTANICAL INVENTORY OF FOREST ON KARSTIC LIMESTONE AND METAMORPHIC SUBSTRATE IN THE CHIQUIBUL FOREST, BELIZE, WITH FOCUS ON WOODY TAXA. Edinburgh Journal of Botany, 73(01), 39–81. doi:10.1017/s0960428615000256
+Reol	10.1002/ece3.1109	Banbury, B. L., & O’Meara, B. C. (2014). Reol: R interface to the Encyclopedia of Life. Ecology and Evolution, 4(12), 2577–2583. doi:10.1002/ece3.1109
+rgbif	10.1111/ele.12170	Bartomeus, I., Park, M. G., Gibbs, J., Danforth, B. N., Lakso, A. N., & Winfree, R. (2013). Biodiversity ensures plant-pollinator phenological synchrony against climate change. Ecol Lett, 16(11), 1331–1338. doi:10.1111/ele.12170
+rgbif	10.1016/j.ecoinf.2014.08.008	Barve, V. (2014). Discovering and developing primary biodiversity data from social networking sites: A novel approach. Ecological Informatics, 24, 194–199. doi:10.1016/j.ecoinf.2014.08.008
+taxize	10.1016/j.ecoinf.2015.05.004	Vanden Berghe, E., Coro, G., Bailly, N., Fiorellato, F., Aldemita, C., Ellenbroek, A., & Pagano, P. (2015). Retrieving taxa names from large biodiversity data collections using a flexible matching workflow. Ecological Informatics, 28, 29–41. doi:10.1016/j.ecoinf.2015.05.004
+taxize	10.1111/2041-210x.12327	Bocci, G. (2015). TR8: an R package for easily retrieving plant species traits. Methods in Ecology and Evolution, 6(3), 347–350. doi:10.1111/2041-210x.12327
+rgbif	10.1111/nph.13572	Bone, R. E., Smith, J. A. C., Arrigo, N., & Buerki, S. (2015). A macro-ecological perspective on crassulacean acid metabolism (CAM) photosynthesis evolution in Afro-Madagascan drylands: Eulophiinae orchids as a case study. New Phytol, 208(2), 469–481. doi:10.1111/nph.13572
+rnoaa	10.1016/j.cageo.2015.02.013	Bowman, D. C., & Lees, J. M. (2015). Near real time weather and ocean model data access with rNOMADS. Computers & Geosciences, 78, 88–95. doi:10.1016/j.cageo.2015.02.013
+taxize	10.1007/s10530-015-0970-8	Bradie, J., Pietrobon, A., & Leung, B. (2015). Beyond species-specific assessments: an analysis and validation of environmental distance metrics for non-indigenous species risk assessment. Biological Invasions, 17(12), 3455–3465. doi:10.1007/s10530-015-0970-8
+rgbif	10.3897/bdj.3.e4162	Collins, R., Duarte Ribeiro, E., Nogueira Machado, V., Hrbek, T., & Farias, I. (2015). A preliminary inventory of the catfishes of the lower Rio Nhamundá, Brazil (Ostariophysi, Siluriformes). Biodiversity Data Journal, 3, e4162. doi:10.3897/bdj.3.e4162
+helminthR	10.1038/srep13185	Dallas, T., & Cornelius, E. (2015). Co-extinction in a host-parasite network: identifying key hosts for network stability. Scientific Reports, 5, 13185. doi:10.1038/srep13185
+taxize	10.1111/ddi.12351	Dodd, A. J., Burgman, M. A., McCarthy, M. A., & Ainsworth, N. (2015). The changing patterns of plant naturalization in Australia. Diversity Distrib., 21(9), 1038–1050. doi:10.1111/ddi.12351
+rgbif	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rdryad	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rfisheries	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+RMendeley	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+treeBASE	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rfishbase	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+taxize	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rsnsps	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rvertnet	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rentrez	10.2478/cszma-2013-0004	Drozd, P., & Šipoš, J. (2013). R for all (I): Introduction to the new age of biological analyses. Casopis Slezskeho Zemskeho Muzea (A), 62(1). doi:10.2478/cszma-2013-0004
+rfishbase	10.1016/j.aquaculture.2016.04.018	Froehlich, H. E., Gentry, R. R., & Halpern, B. S. (2016). Synthesis and comparative analysis of physiological tolerance and life-history growth traits of marine aquaculture species. Aquaculture, 460, 75–82. doi:10.1016/j.aquaculture.2016.04.018
+taxize	10.12688/f1000research.2-191.v1	Chamberlain, S. A., & Szöcs, E. (2013). taxize: taxonomic search and retrieval in R. F1000Res. doi:10.12688/f1000research.2-191.v1
+rplos	10.7717/peerj.1935	Hartgerink, C. H. J., van Aert, R. C. M., Nuijten, M. B., Wicherts, J. M., & van Assen, M. A. L. M. (2016). Distributions ofp-values smaller than .05 in psychology: what is going on? PeerJ, 4, e1935. doi:10.7717/peerj.1935
+taxize	10.1111/mec.13026	Hodgins, K. A., Bock, D. G., Hahn, M. A., Heredia, S. M., Turner, K. G., & Rieseberg, L. H. (2015). Comparative genomics in the Asteraceae reveals little evidence for parallel evolutionary change in invasive taxa. Mol Ecol, 24(9), 2226–2240. doi:10.1111/mec.13026
+ropensci	10.1890/es14-00198.1	Jørgensen, P. S., Barraquand, F., Bonhomme, V., Curran, T. J., Cieraad, E., Ezard, T. G., … Zimmerman, N. (2015). Connecting people and ideas from around the world: global innovation platforms for next-generation ecology and beyond. Ecosphere, 6(4), art68. doi:10.1890/es14-00198.1
+rgbif	10.1371/journal.pone.0128295	Kong, X., Huang, M., & Duan, R. (2015). SDMdata: A Web-Based Software Tool for Collecting Species Occurrence Records. PLoS ONE, 10(6), e0128295. doi:10.1371/journal.pone.0128295
+taxize	10.1186/s40709-015-0032-5	Lapatas, V., Stefanidakis, M., Jimenez, R. C., Via, A., & Schneider, M. V. (2015). Data integration in biological research: an overview. J of Biol Res-Thessaloniki, 22(1). doi:10.1186/s40709-015-0032-5
+rfishbase	10.1126/science.aab0800	McGee, M. D., Borstein, S. R., Neches, R. Y., Buescher, H. H., Seehausen, O., & Wainwright, P. C. (2015). A pharyngeal jaw evolutionary innovation facilitated extinction in Lake Victoria cichlids. Science, 350(6264), 1077–1079. doi:10.1126/science.aab0800
+ropensci	10.1080/07317131.2015.1059681	Mitchell, E. T. (2015). Reproducibility and Its Application to Technical Service Processes. Technical Services Quarterly, 32(4), 402–413. doi:10.1080/07317131.2015.1059681
+taxize	10.1111/2041-210x.12600	Niedballa, J., Sollmann, R., Courtiol, A., & Wilting, A. (2016). camtrapR: an R package for efficient camera trap data management. Methods in Ecology and Evolution. doi:10.1111/2041-210x.12600
+taxize	10.1002/pca.2520	Ningthoujam, S. S., Choudhury, M. D., Potsangbam, K. S., Chetia, P., Nahar, L., Sarker, S. D., … Talukdar, A. D. (2014). NoSQL Data Model for Semi-automatic Integration of Ethnomedicinal Plant Data from Multiple Sources. Phytochemical Analysis, 25(6), 495–507. doi:10.1002/pca.2520
+taxize	10.3897/zookeys.552.6934	Pérez-Luque, A. J., Barea-Azcón, J. M., Álvarez-Ruiz, L., Bonet-García, F. J., & Zamora, R. (2016). Dataset of Passerine bird communities in a Mediterranean high mountain (Sierra Nevada, Spain). ZK, 552, 137–154. doi:10.3897/zookeys.552.6934
+rbrefdata	10.1002/ece3.1547	Pfaff, C.-T., König-Ries, B., Lang, A. C., Ratcliffe, S., Wirth, C., Man, X., & Nadrowski, K. (2015). rBEFdata: documenting data exchange and analysis for a collaborative data management platform. Ecology and Evolution, 5(14), 2890–2897. doi:10.1002/ece3.1547
+AntWeb	10.1111/een.12306	PIE, M. R. (2016). The macroevolution of climatic niches and its role in ant diversification. Ecological Entomology, 41(3), 301–307. doi:10.1111/een.12306
+rfishbase	10.1007/s11538-016-0143-7	Plank, M. J., Pitchford, J. W., & James, A. (2016). Evolutionarily Stable Strategies for Fecundity and Swimming Speed of Fish. Bull Math Biol, 78(2), 280–292. doi:10.1007/s11538-016-0143-7
+taxize	10.4033/iee.2015.8.8.f	Poisot, T. (2015). Best publishing practices to improve user confidence in scientific software. IEE, 8. doi:10.4033/iee.2015.8.8.f
+ropensci	10.1002/ece3.508	Poisot, T., Péquin, B., & Gravel, D. (2013). High-Throughput Sequencing: A Roadmap Toward Community Ecology. Ecology and Evolution, 3(4), 1125–1139. doi:10.1002/ece3.508
+taxize	10.1002/ece3.1246	Pos, E., Guevara Andino, J. E., Sabatier, D., Molino, J.-F., Pitman, N., Mogollón, H., … ter Steege, H. (2014). Are all species necessary to reveal ecologically important patterns? Ecology and Evolution, 4(24), 4626–4636. doi:10.1002/ece3.1246
+rfishbase	10.1098/rspb.2015.1428	Price, S. A., Friedman, S. T., & Wainwright, P. C. (2015). How predation shaped fish: the impact of fin spines on body form evolution across teleosts. Proc. R. Soc. B, 282(1819), 20151428. doi:10.1098/rspb.2015.1428
+rgbif	10.2989/20702620.2014.999305	Richardson, D. M., Le Roux, J. J., & Wilson, J. R. (2015). Australian acacias as invasive species: lessons to be learnt from regions with long planting histories. Southern Forests: a Journal of Forest Science, 77(1), 31–39. doi:10.2989/20702620.2014.999305
+rfishbase	10.1111/ecog.01348	Sagouis, A., Cucherousset, J., Villéger, S., Santoul, F., & Boulêtreau, S. (2015). Non-native species modify the isotopic structure of freshwater fish communities across the globe. Ecography, 38(10), 979–985. doi:10.1111/ecog.01348
+rgbif	10.1002/ece3.1599	Turner, K. G., Fréville, H., & Rieseberg, L. H. (2015). Adaptive plasticity and niche expansion in an invasive thistle. Ecology and Evolution, 5(15), 3183–3197. doi:10.1002/ece3.1599
+taxize	10.3390/jmse3041448	Vandepitte, L., Vanhoorne, B., Decock, W., Dekeyzer, S., Trias Verbeeck, A., Bovit, L., … Mees, J. (2015). How Aphia—The Platform behind Several Online and Taxonomically Oriented Databases—Can Serve Both the Taxonomic Community and the Field of Biodiversity Informatics. Journal of Marine Science and Engineering, 3(4), 1448–1473. doi:10.3390/jmse3041448
+paleobioDB	10.1111/ecog.01154	Varela, S., González-Hernández, J., Sgarbi, L. F., Marshall, C., Uhen, M. D., Peters, S., & McClennen, M. (2014). paleobioDB: an R package for downloading, visualizing and processing data from the Paleobiology Database. Ecography, 38(4), 419–425. doi:10.1111/ecog.01154
+rgbif	10.1111/nph.13623	Verheijen, L. M., Aerts, R., Bönisch, G., Kattge, J., & Van Bodegom, P. M. (2015). Variation in trait trade-offs allows differentiation among predefined plant functional types: implications for predictive ecology. New Phytol, 209(2), 563–575. doi:10.1111/nph.13623
+rplos	10.4033/iee.2015.8.9.c	White, E. (2015). Some thoughts on best publishing practices for scientific software. IEE, 8. doi:10.4033/iee.2015.8.9.c
+rgbif	10.1101/032755	Zizka, A., & Antonelli, A. (2015). speciesgeocodeR: An R package for linking species occurrences, user-defined regions and phylogenetic trees for biogeography, ecology and evolution. doi:10.1101/032755
+plotly	10.1161/circinterventions.115.002569	Rothman, A. M. K., Arnold, N. D., Chang, W., Watson, O., Swift, A. J., Condliffe, R., … Lawrie, A. (2015). Pulmonary Artery Denervation Reduces Pulmonary Artery Pressure and Induces Histological Changes in an Acute Porcine Model of Pulmonary Hypertension. Circulation: Cardiovascular Interventions, 8(11), e002569–e002569. doi:10.1161/circinterventions.115.002569
+taxize	10.1890/15-1397.1	Bachelot, B., Uriarte, M., Zimmerman, J. K., Thompson, J., Leff, J. W., Asiaii, A., … McGuire, K. (2016). Long-lasting effects of land use history on soil fungal communities in second-growth tropical rain forests. Ecol Appl. doi:10.1890/15-1397.1
+rfishbase	10.1111/zsc.12098	Boeger, W. A., Marteleto, F. M., Zagonel, L., & Braga, M. P. (2014). Tracking the history of an invasion: the freshwater croakers (Teleostei: Sciaenidae) in South America. Zool Scr, 44(3), 250–262. doi:10.1111/zsc.12098
+rgbif	10.1111/rec.12381	Butterfield, B. J., Copeland, S. M., Munson, S. M., Roybal, C. M., & Wood, T. E. (2016). Prestoration: using species in restoration that will persist now and into the future. Restoration Ecology. doi:10.1111/rec.12381
+ropensci	10.1071/mf15108	Dafforn, K. A., Johnston, E. L., Ferguson, A., Humphrey, C. L., Monk, W., Nichols, S. J., … Baird, D. J. (2016). Big data opportunities and challenges for assessing multiple stressors across scales in aquatic ecosystems. Marine and Freshwater Research, 67(4), 393. doi:10.1071/mf15108
+rgbif	10.1111/nph.13694	Dellinger, A. S., Essl, F., Hojsgaard, D., Kirchheimer, B., Klatt, S., Dawson, W., … Dullinger, S. (2015). Niche dynamics of alien species do not differ among sexual and apomictic flowering plants. New Phytol, 209(3), 1313–1323. doi:10.1111/nph.13694
+rgbif	10.1590/0102-33062014abb3711	Feitosa, Y. O., Absy, M. L., Latrubesse, E. M., & Stevaux, J. C. (2015). Late Quaternary vegetation dynamics from central parts of the Madeira River in Brazil. Acta Botanica Brasilica, 29(1), 120–128. doi:10.1590/0102-33062014abb3711
+rgbif	10.1111/jvs.12301	Malhado, A. C. M., Oliveira-Neto, J. A., Stropp, J., Strona, G., Dias, L. C. P., Pinto, L. B., & Ladle, R. J. (2015). Climatological correlates of seed size in Amazonian forest trees. Journal of Vegetation Science, 26(5), 956–963. doi:10.1111/jvs.12301
+ropensci	10.1007/s10816-015-9272-9	Marwick, B. (2016). Computational Reproducibility in Archaeological Research: Basic Principles and a Case Study of Their Implementation. Journal of Archaeological Method and Theory. doi:10.1007/s10816-015-9272-9
+rfishbase	10.1111/1365-2656.12471	Mindel, B. L., Webb, T. J., Neat, F. C., & Blanchard, J. L. (2016). A trait-based metric sheds new light on the nature of the body size-depth relationship in the deep sea. J Anim Ecol, 85(2), 427–436. doi:10.1111/1365-2656.12471
+rfishbase	10.1371/journal.pone.0073535	Miya, M., Friedman, M., Satoh, T. P., Takeshima, H., Sado, T., Iwasaki, W., … Nishida, M. (2013). Evolutionary Origin of the Scombridae (Tunas and Mackerels): Members of a Paleogene Adaptive Radiation with 14 Other Pelagic Fish Families. PLoS ONE, 8(9), e73535. doi:10.1371/journal.pone.0073535
+ropensci	10.1109/mcse.2014.93	Pawlik, A., Segal, J., Sharp, H., & Petre, M. (2015). Crowdsourcing Scientific Software Documentation: A Case Study of the NumPy Documentation Project. Computing in Science & Engineering, 17(1), 28–36. doi:10.1109/mcse.2014.93
+taxize	10.3897/phytokeys.46.9116	Pérez-Luque, A. J., Sánchez-Rojas, C. P., Zamora, R., Pérez-Pérez, R., & Bonet, F. J. (2015). Dataset of Phenology of Mediterranean high-mountain meadows flora (Sierra Nevada, Spain). PhytoKeys, 46, 89–107. doi:10.3897/phytokeys.46.9116
+taxize	10.1111/ecog.01941	Poisot, T., Gravel, D., Leroux, S., Wood, S. A., Fortin, M.-J., Baiser, B., … Stouffer, D. B. (2015). Synthetic datasets and community tools for the rapid testing of ecological hypotheses. Ecography, 39(4), 402–408. doi:10.1111/ecog.01941
+rfishbase	10.1007/s00338-015-1326-7	Price, S. A., Claverie, T., Near, T. J., & Wainwright, P. C. (2015). Phylogenetic insights into the history and diversification of fishes on reefs. Coral Reefs, 34(4), 997–1009. doi:10.1007/s00338-015-1326-7
+ropensci	10.1111/ecog.01880	Read, J. S., Walker, J. I., Appling, A. P., Blodgett, D. L., Read, E. K., & Winslow, L. A. (2015). geoknife: reproducible web-processing of large gridded datasets. Ecography, 39(4), 354–360. doi:10.1111/ecog.01880
+paleobioDB	10.1111/ecog.01880	Read, J. S., Walker, J. I., Appling, A. P., Blodgett, D. L., Read, E. K., & Winslow, L. A. (2015). geoknife: reproducible web-processing of large gridded datasets. Ecography, 39(4), 354–360. doi:10.1111/ecog.01880
+chromer	10.1016/bs.abr.2016.02.001	Sessa, E. B., & Der, J. P. (2016). Evolutionary Genomics of Ferns and Lycophytes. Genomes and Evolution of Charophytes, Bryophytes, Lycophytes and Ferns, 215–254. doi:10.1016/bs.abr.2016.02.001
+taxize	10.5194/bg-13-2537-2016	Wagner, F. H., Hérault, B., Bonal, D., Stahl, C., Anderson, L. O., Baker, T. R., … Botosso, P. C. (2016). Climate seasonality limits leaf carbon assimilation and wood productivity in tropical forests. Biogeosciences, 13(8), 2537–2562. doi:10.5194/bg-13-2537-2016
+rgbif	10.1073/pnas.1424030112	Werner, G. D. A., Cornwell, W. K., Cornelissen, J. H. C., & Kiers, E. T. (2015). Evolutionary signals of symbiotic persistence in the legume–rhizobia mutualism. Proc Natl Acad Sci USA, 112(33), 10262–10269. doi:10.1073/pnas.1424030112
+rgbif	10.1111/ecog.02118	Robertson, M. P., Visser, V., & Hui, C. (2016). Biogeo: an R package for assessing and improving data quality of occurrence record datasets. Ecography, 39(4), 394–401. doi:10.1111/ecog.02118
+rfishbase	10.1111/jzs.12103	Collins, R. A., Britz, R., & Rüber, L. (2015). Phylogenetic systematics of leaffishes (Teleostei: Polycentridae, Nandidae). Journal of Zoological Systematics and Evolutionary Research, 53(4), 259–272. doi:10.1111/jzs.12103
+rgbif	10.1126/science.aab1161	Davison, J., Moora, M., Opik, M., Adholeya, A., Ainsaar, L., Ba, A., … Zobel, M. (2015). Global assessment of arbuscular mycorrhizal fungus diversity reveals very low endemism. Science, 349(6251), 970–973. doi:10.1126/science.aab1161
+ritis	10.1111/1365-2745.12135	Goring, S., Lacourse, T., Pellatt, M. G., & Mathewes, R. W. (2013). Pollen assemblage richness does not reflect regional plant species richness: a cautionary tale. Journal of Ecology, 101(5), 1137–1145. doi:10.1111/1365-2745.12135
+ropensci	10.3201/eid2108.141156	Olson, S. H., Benedum, C. M., Mekaru, S. R., Preston, N. D., Mazet, J. A. K., Joly, D. O., & Brownstein, J. S. (2015). Drivers of Emerging Infectious Disease Events as a Framework for Digital Detection. Emerging Infectious Diseases, 21(8), 1285–1292. doi:10.3201/eid2108.141156
+rfishbase	10.1080/00028487.2015.1111253	Schaefer, J., Frazier, N., & Barr, J. (2015). Dynamics of Near-Coastal Fish Assemblages following the Deepwater Horizon Oil Spill in the Northern Gulf of Mexico. Transactions of the American Fisheries Society, 145(1), 108–119. doi:10.1080/00028487.2015.1111253
+taxize	10.7717/peerj-cs.56	Schwery, O., & O’Meara, B. C. (2016).  MonoPhy : a simple R package to find and visualize monophyly issues . PeerJ Computer Science, 2, e56. doi:10.7717/peerj-cs.56
 \.
 
 
@@ -689,138 +1111,385 @@ COPY github (id, name, created_at, updated_at, size, language, forks, open_issue
 
 
 --
+-- Data for Name: groupings; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY groupings (name, "grouping") FROM stdin;
+alm	altmetrics
+AntWeb	data-access
+aRxiv	literature
+bmc	literature
+bold	data-access
+citeulike	literature
+clifro	data-access
+dependencies	scalable-reproducible-computing
+dvn	data-publication
+ecoengine	data-access
+ecoretriever	data-access
+elastic	databases
+elife	literature
+EML	data-publication
+floras	data-access
+fulltext	literature
+geojsonio	geospatial
+gender	data-access
+geonames	data-access
+gigadb	data-access
+gistr	scalable-reproducible-computing
+git2r	scalable-reproducible-computing
+gitr	scalable-reproducible-computing
+historydata	data-access
+ICES	unknown
+IEEER	data-access
+mdextract	data-tools
+mocker	data-tools
+neotoma	data-access
+ots	data-access
+paleobioDB	data-access
+pangaear	data-access
+pleiades	data-access
+plotly	data-vizualization
+prism	data-access
+rAltmetric	altmetrics
+rAvis	data-access
+rbhl	literature
+rbison	data-access
+rcrossref	literature
+RCryptsy	data-access
+rDat	scalable-reproducible-computing
+rdatacite	literature
+rdataone	data-publication
+rdryad	literature
+rebi	literature
+rebird	data-access
+rentrez	data-access
+Reol	data-access
+rfigshare	data-publication
+rfishbase	data-access
+rfisheries	data-access
+rflybase	data-access
+rgauges	data-access
+rgbif	data-access
+rglobi	data-access
+rgpdd	data-access
+rhindawi	literature
+rImpactStory	altmetrics
+rinat	data-access
+ritis	data-access
+RMendeley	literature
+rmetadata	literature
+RMETAR	data-access
+rnbn	data-access
+RNeXML	data-publication
+rnoaa	data-access
+rnpn	data-access
+rOBIS	data-access
+rorcid	literature
+rpensoft	literature
+rplos	literature
+rpmc	literature
+rpwt	literature
+RSelenium	data-access
+rsnps	data-access
+rspringer	literature
+rvertnet	data-access
+rWBclimate	data-access
+sandbox	unknown
+sheetseeR	unknown
+solr	databases
+spocc	data-access
+taxize	data-access
+testdat	data-tools
+traits	data-access
+treebase	data-access
+ucipp	data-access
+USAboundaries	data-access
+USAboundariesData	data-access
+zenodo	data-publication
+chromer	data-access
+ckanr	databases
+dashboard	unknown
+ggit	scalable-reproducible-computing
+musemeta	data-access
+rdpla	data-access
+redland-bindings	infrastructure
+rerddap	databases
+reuropeana	data-access
+rGEM	data-access
+RStars	data-access
+taxizesoap	data-access
+webmockr	data-tools
+binomen	data-tools
+cartographer	data-vizualization
+csl	literature
+elasticdsl	databases
+etseed	databases
+finch	data-tools
+genderdata	data-access
+hathi	data-access
+internetarchive	data-access
+jqr	data-tools
+lawn	geospatial
+nodbi	databases
+opencontext	data-access
+parasiteR	data-access
+proj	geospatial
+rchie	literature
+rdopa	data-access
+RedisAPI	databases
+rif	data-access
+rrlite	databases
+sofa	databases
+webchem	data-access
+wellknown	geospatial
+rotl	data-access
+ropkgs	infrastructure
+rusda	data-access
+oai	literature
+apipkgen	infrastructure
+appl	unknown
+aspacer	databases
+atomize	infrastructure
+brranching	data-access
+ccafs	data-access
+cmip	data-access
+colorpiler	data-vizualization
+convertr	data-tools
+cored	literature
+datapack	data-tools
+datapkg	data-tools
+dirdf	infrastructure
+eechidna	data-access
+gdoc	literature
+geoaxe	geospatial
+geojson	geospatial
+geojsonlint	geospatial
+geolocart	geospatial
+geoops	geospatial
+getlandsat	data-access
+gtfsr	data-access
+gutenbergr	literature
+hunspell	data-tools
+jsonvalidate	data-tools
+mapr	geospatial
+mregions	data-access
+opencage	geospatial
+originr	data-access
+osmplotr	data-vizualization
+pdftools	data-tools
+rgeospatialquality	geospatial
+riodata	data-access
+robotstxt	data-tools
+ropenaq	data-access
+rredlist	data-access
+rwdpa	data-access
+scrubr	data-tools
+snowball	scalable-reproducible-computing
+solrium	databases
+spenv	data-access
+splister	data-access
+spplist	data-access
+spplit	data-access
+stplanr	data-access
+taxa	data-tools
+taxizedb	data-access
+urltemplate	data-tools
+vcr	data-tools
+dissem	literature
+sparqldsl	databases
+riem	data-access
+textreuse	scalable-reproducible-computing
+\.
+
+
+--
 -- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY repos (name, repo_type, maintainer, email, status, installable, build_vignettes, category, on_cran, cran_archived, url, root, fork, description, route_github_travis, route_appveyor) FROM stdin;
-alm	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	altmetrics	t	f	https://github.com/ropensci/alm	\N	f	R wrapper to the almetrics API platform developed by PLoS  API -other publishers have built on this and work out of the box: CrossRef, Copernicus Publishers, and the Public Knowledge Project (PKP)	ropensci/alm	sckott/alm
-AntWeb	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/AntWeb	\N	f	Access data from the world's largest ant database. Maintained and developed by the California Academy of Science	ropensci/AntWeb	karthik/AntWeb
-aRxiv	package	Karl Broman	kbroman@biostat.wisc.edu	good	t	t	literature	t	f	https://github.com/ropensci/aRxiv	\N	f	Access to the aRxiv preprint repository	ropensci/aRxiv	karthik/aRxiv
-binomen	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	taxonomy,biology	f	\N	https://github.com/ropensci/binomen	\N	f	Taxonomic name classes and parsing methods	ropensci/binomen	\N
-bmc	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/bmc	\N	f	An R interface to Biomed Central (BMC) search API and full text XML	ropensci/bmc	sckott/bmc
-bold	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/bold	\N	f	R client for BOLD Systems (Barcode Of Life Database).	ropensci/bold	sckott/bold
-cartographer	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	maps	f	\N	https://github.com/ropensci/cartographer	\N	f	A wrapper around d3-carto-map and the d3.js visualization library to create interactive maps at the R console and in R documents.	ropensci/cartographer	\N
-chromer	package	Matthew Pennell	mwpennell@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/chromer	\N	f	package for interacting with the chromosome counts database (CCDB) at http://ccdb.tau.ac.il	ropensci/chromer	karthik/chromer
-citeulike	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	altmetrics	f	\N	https://github.com/ropensci/citeulike	\N	f	R interface to CiteULike	ropensci/citeulike	\N
-ckanr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	infrastructure,databases	f	\N	https://github.com/ropensci/ckanr	\N	f	R client for CKAN RESTful API	ropensci/ckanr	sckott/ckanr
-clifro	package	Blake Seers	blake.seers@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/clifro	\N	f	An R client for New Zealand's National Climate Database	ropensci/clifro	\N
-csl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/csl	\N	f	Parse CSL Styles	ropensci/csl	\N
-dashboard	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/dashboard	\N	f	A R package dashboard generator	ropensci/dashboard	\N
-datapackage	package	Matthew Jones	jones@nceas.ucsb.edu	good	t	t	infrastructure	f	\N	https://github.com/ropensci/datapackage	\N	f	An R package to handle data packages	ropensci/datapackage	\N
-dependencies	package	Gavin Simpson	ucfagls@gmail.com	hiatus	t	t	infrastructure	f	\N	https://github.com/ropensci/dependencies	\N	f	\N	ropensci/dependencies	\N
-dvn	package	Thomas J. Leeper	thosjleeper@gmail.com	good	t	t	publication	t	f	https://github.com/ropensci/dvn	\N	f	Programmatic interface to the DataVerse Network.	ropensci/dvn	\N
-ecoengine	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/ecoengine	\N	f	Retrieve 3+ MM records, checklists and photos from Berkeley's ecoengine	ropensci/ecoengine	karthik/ecoengine
-ecoretriever	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/ecoretriever	\N	f	R client wrapping the Python Ecoretriever software.	ropensci/ecoretriever	\N
-elastic	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	infrastructure,databases	t	f	https://github.com/ropensci/elastic	\N	f	An R client for Elasticsearch In early development	ropensci/elastic	sckott/elastic
-elasticdsl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	databases	f	\N	https://github.com/ropensci/elasticdsl	\N	f	Elasticsearch DSL	ropensci/elasticdsl	sckott/elasticdsl
-elife	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	literature	f	\N	https://github.com/ropensci/elife	\N	f	R interface to the eLife API	ropensci/elife	\N
-EML	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	publication	f	\N	https://github.com/ropensci/EML	\N	f	An R package for reading, writing, integrating and publishing data using the Ecological Metadata Language (EML) format.	ropensci/EML	\N
-etseed	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	databases	f	\N	https://github.com/ropensci/etseed	\N	f	R client to interact with the etcd key-value data store	ropensci/etseed	sckott/etseed
-finch	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	ecology	f	\N	https://github.com/ropensci/finch	\N	f	Parse and create Darwin Core Simple and Archive Files	ropensci/finch	sckott/finch
-floras	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/floras	\N	f	Web page scraping for eFloras, including the Flora of North America	ropensci/floras	\N
-fulltext	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/fulltext	\N	f	An high level R interface to many different sources for full text (or nearly) scholarly texts, including PLOS, PMC, PeerJ, eLife, arXiv, and many more	ropensci/fulltext	sckott/fulltext
-gender	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	history	t	f	https://github.com/ropensci/gender	\N	f	gender is an R package to encode gender based on names and dates of birth	ropensci/gender	\N
-genderdata	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	history	f	\N	https://github.com/ropensci/genderdata	\N	t	Historical data sets for the study of gender	ropensci/genderdata	\N
-geojsonio	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	visualization	t	f	https://github.com/ropensci/geojsonio	\N	f	A package to convert many data formats to geoJSON or Bostock's topoJSON	ropensci/geojsonio	\N
-geonames	package	Barry Rowlingson	b.rowlingson@gmail.com	good	t	t	infrastructure	t	f	https://github.com/ropensci/geonames	\N	f	Grab data from the GeoNames geographical database which covers all countries and contains over eight million placenames	ropensci/geonames	\N
-ggit	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	reproducibility	f	\N	https://github.com/ropensci/ggit	\N	f	Git visualization tools for git2r	ropensci/ggit	\N
-gigadb	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	t	literature	f	\N	https://github.com/ropensci/gigadb	\N	f	\N	ropensci/gigadb	\N
-gistr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	reproducibility	t	f	https://github.com/ropensci/gistr	\N	f	gistr is a light interface to GitHub's gists for R	ropensci/gistr	sckott/gistr
-git2r	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/git2r	\N	f	Git bindings from R	ropensci/git2r	karthik/git2r
-gitr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	reproducibility	t	f	https://github.com/ropensci/gitr	\N	f	git/github from R	ropensci/gitr	\N
-hathi	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature,history	f	\N	https://github.com/ropensci/hathi	\N	f	An R client for HathiTrust API	ropensci/hathi	\N
-historydata	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	history	t	f	https://github.com/ropensci/historydata	\N	f	An R package with datasets of interest to historians. It is primarily intended for pedagogic purposes in teaching historians how to use R	ropensci/historydata	\N
-ICES	package	Karthik Ram	karthik.ram@gmail.com	hiatus	f	t	biology	f	\N	https://github.com/ropensci/ICES	\N	f	R interface to the ICES DATA PORTAL	ropensci/ICES	\N
-IEEER	package	Saul Wiggin	saulwiggin@googlemail.com	good	t	t	literature	f	\N	https://github.com/ropensci/IEEER	\N	f	Interface to the IEEE Xplore Gateway	ropensci/IEEER	karthik/IEEER
-internetarchive	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	history,literature	t	f	https://github.com/ropensci/internetarchive	\N	f	An API Client for the Internet Archive	ropensci/internetarchive	\N
-jqr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	utilities	f	\N	https://github.com/ropensci/jqr	\N	f	An R client for jq	ropensci/jqr	\N
-lawn	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	maps	t	f	https://github.com/ropensci/lawn	\N	f	R Client for turf.js for Geospatial Analysis	ropensci/lawn	sckott/lawn
-mdextract	package	Edmund Hart	edmund.m.hart@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/mdextract	\N	f	package to extract metadata from data	ropensci/mdextract	\N
-mocker	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	infrastructure	f	\N	https://github.com/ropensci/mocker	\N	f	Cache API calls to the web	ropensci/mocker	\N
-musemeta	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	history	f	\N	https://github.com/ropensci/musemeta	\N	f	R Client for Scraping Museum Metadata, including The Metropolitan Museum of Art, the Canadian Science & Technology Museum Corporation, the National Gallery of Art, and the Getty Museum, and more to come	ropensci/musemeta	sckott/musemeta
-neotoma	package	Simon Goring	goring@wisc.edu	good	t	t	biology	t	f	https://github.com/ropensci/neotoma	\N	f	Search for sites and download data for use in analytical workflows of paleoecological research using the Neotoma Paleoecological Database	ropensci/neotoma	karthik/neotoma
-nodbi	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	databases	f	\N	https://github.com/ropensci/nodbi	\N	f	Simplified document database manipulation and analysis	ropensci/nodbi	\N
-opencontext	package	Ben Marwick	bmarwick@uw.edu	good	t	t	archeology	f	\N	https://github.com/ropensci/opencontext	\N	f	API Client for the Open Context Archeological Database	ropensci/opencontext	\N
-ots	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/ots	\N	f	ocean time series datasets	ropensci/ots	sckott/ots
-paleobioDB	package	Sara Varela	svarela@paleobiogeography.org	good	t	t	biology	t	f	https://github.com/ropensci/paleobioDB	\N	f	Access data from the Paleobiology Database, a warehouse of paleobiology database	ropensci/paleobioDB	\N
-pangaear	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/pangaear	\N	f	An R client to interact with the Pangaea database.  In early development	ropensci/pangaear	sckott/pangaear
-parasiteR	package	Tad Dallas	tdallas@uga.edu	good	t	t	biology,ecology	f	\N	https://github.com/ropensci/parasiteR	\N	f	Parasite occurrence records from the London Natural History Museum's Host-Parasite database	ropensci/parasiteR	\N
-pleiades	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	archeology	f	\N	https://github.com/ropensci/pleiades	\N	f	Search for and retrieve metadata and spatial location data on archeological places and names from Pleiades.	ropensci/pleiades	\N
-plotly	package	Chris Parmer	chris@plot.ly	good	t	t	visualization	f	\N	https://github.com/ropensci/plotly	\N	f	Programmatic interface to the Plot.ly API -construct plots with ggplot2 and push to Plot.ly for an interactive plot with a few lines of code	ropensci/plotly	\N
-prism	package	Edmund Hart	edmund.m.hart@gmail.com	good	f	f	biology	f	\N	https://github.com/ropensci/prism	\N	f	Download data from the Oregon PRISM climate data project http://www.prism.oregonstate.edu/	ropensci/prism	sckott/prism
-proj	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	maps	f	\N	https://github.com/ropensci/proj	\N	f	R Client for proj4js	ropensci/proj	sckott/proj
-rAltmetric	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	altmetrics	t	f	https://github.com/ropensci/rAltmetric	\N	f	Programmatic interface to article-evel metrics data from Altmetric.com	ropensci/rAltmetric	karthik/raltmetric
-rAvis	package	Sara Varela	svarela@paleobiogeography.org	good	t	t	biology	t	f	https://github.com/ropensci/rAvis	\N	f	Download occurrence data for bird species, and associated metadata from ProyectoAvis, a citizen science bird project in Spain.	ropensci/rAvis	\N
-rbefdata	package	Claas-Thido Pfaff	claas-thido.pfaff@idiv-biodiversity.de	good	t	t	biology	t	\N	https://github.com/ropensci/rbefdata	rbefdata	t	Connects to instances of BEFdata portals for collaborative data management (e.g BEF-hina and FUNdiv)	ropensci/rbefdata	\N
-rbhl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rbhl	\N	f	Access full text and metadata on scanned and OCR text for biodiversity literature from Biodiversity Heritage Library	ropensci/rbhl	sckott/rbhl
-rbison	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rbison	\N	f	R client for USGS's BISON (Biodiversity Information Serving Our Nation).	ropensci/rbison	sckott/rbison
-rchie	package	Noam Ross	noam.ross@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/rchie	\N	f	A Parser for ArchieML	ropensci/rchie	\N
-rcrossref	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rcrossref	\N	f	An R interface to Crossref metadata search API	ropensci/rcrossref	sckott/rcrossref
-RCryptsy	package	William Kyle Hamilton	kyle.hamilton@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/RCryptsy	\N	f	Basic Public API for the Crypto-Currency exchange Cryptsy	ropensci/RCryptsy	\N
-rDat	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	t	infrastructure,databases	f	\N	https://github.com/ropensci/rDat	\N	f	\N	ropensci/rDat	\N
-rdatacite	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/rdatacite	\N	f	Wrapper to DataCite metadata	ropensci/rdatacite	\N
-rdataone	package	Matthew Jones	jones@nceas.ucsb.edu	hiatus	f	t	biology	f	\N	https://github.com/ropensci/rdataone	\N	t	R package for reading and writing data at DataONE data repositories	ropensci/rdataone	\N
-rdopa	package	Joona Lehtomaki	joona.lehtomaki@gmail.com	good	t	t	ecology	f	\N	https://github.com/ropensci/rdopa	\N	f	R client to Joint Research Centre's DOPA REST API	ropensci/rdopa	\N
-rdpla	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	history	f	\N	https://github.com/ropensci/rdpla	\N	f	An R client to interact with Digital Public Library of America (DPLA) metadata	ropensci/rdpla	\N
-rdryad	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rdryad	\N	f	Push data to and get data from Dryad a repository of data associated with published scholarly papers. Development pending upcoming API changes.	ropensci/rdryad	\N
-rebi	package	Najko Jahn	najko.jahn@uni-bielefeld.de	good	t	t	literature	f	\N	https://github.com/ropensci/rebi	\N	t	Access to the European PubMed Central database of papers and metadata	ropensci/rebi	\N
-rebird	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rebird	\N	f	Search and acquire occurrence records of bird sightings collated in the eBird database	ropensci/rebird	sckott/rebird
-RedisAPI	package	Rich FitzJohn	rich.fitzjohn@gmail.com	good	t	f	databases	f	\N	https://github.com/ropensci/RedisAPI	\N	f	Wrapper For Redis API	ropensci/RedisAPI	\N
-redland-bindings	package	Matthew Jones	jones@nceas.ucsb.edu	good	t	t	biology,infrastructure,databases	f	\N	https://github.com/ropensci/redland-bindings	R/redland	t	Redland librdf language bindings	ropensci/redland-bindings	\N
-rentrez	package	David Winter	david.winter@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rentrez	\N	f	rentrez provides functions that work with the NCBI eutils to search or download data from various NCBI databases	ropensci/rentrez	sckott/rentrez
-reol	package	Barb Banbury	darwinthesun@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/reol	\N	f	R client to the Encyclopedia of Life a website and database of data/images/descriptions of species.	ropensci/reol	\N
-rerddap	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology,infrastructure,databases	t	f	https://github.com/ropensci/rerddap	\N	f	R client for working with ERDDAP servers	ropensci/rerddap	sckott/rerddap
-reuropeana	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	history	f	\N	https://github.com/ropensci/reuropeana	\N	f	An R client to interact with Europeana metadata	ropensci/reuropeana	\N
-rfigshare	package	Carl Boettiger	cboettig at gmail.com	good	t	t	literature,databases	t	f	https://github.com/ropensci/rfigshare	\N	f	Push data, figures, and text to, and search and retrieve data from, Figshare from R	ropensci/rfigshare	\N
-rfishbase	package	Carl Boettiger	cboettig@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rfishbase	\N	f	Access any fish data from Fishbase.org, including occurrence records, habitat data, and more	ropensci/rfishbase	\N
-rfisheries	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rfisheries	\N	f	Search and retrieve data from the OpenFisheries.org, currently providing access to global capture fishing landings from the Food and Agriculture Organization (FAO) of the United Nations	ropensci/rfisheries	karthik/rfisheries
-rflybase	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	biology	f	\N	https://github.com/ropensci/rflybase	\N	f	A wrapper to FlyBase data	ropensci/rflybase	\N
-rgauges	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	analytics	t	f	https://github.com/ropensci/rgauges	\N	f	Interface to Gaug.es API	ropensci/rgauges	\N
-rgbif	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rgbif	\N	f	Access more than 400 million species occurrence records from across the globe in one place, from the Global Biodiversity Information Facility	ropensci/rgbif	sckott/rgbif
-rGEM	package	Abaghan Ghahraman	abaghan@gmail.com	good	t	t	economics	f	\N	https://github.com/ropensci/rGEM	\N	f	A wrapper around GEM data	ropensci/rGEM	\N
-rglobi	package	Jorrit Poelen	jhpoelen+rglobi@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rglobi	\N	f	R library to access species interaction data of http://globalbioticinteractions.org	ropensci/rglobi	\N
-rgpdd	package	Carl Boettiger	cboettig@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/rgpdd	\N	f	Interface to the Global Population Dynamics Database, http://www3.imperial.ac.uk/cpb/databases/gpdd	ropensci/rgpdd	\N
-rhindawi	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	literature	f	\N	https://github.com/ropensci/rhindawi	\N	f	R interface to the Hindawi Journals metadata and corpus	ropensci/rhindawi	\N
-rif	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	neuroscience	f	\N	https://github.com/ropensci/rif	\N	f	Client for Neuroscience Information Framework APIs	ropensci/rif	\N
-rImpactStory	package	Karthik Ram	karthik.ram@gmail.com	deprecated	t	t	altmetrics	f	\N	https://github.com/ropensci/rImpactStory	\N	f	Programmatic interface to ImpactStory	ropensci/rImpactStory	\N
-rinat	package	Edmund Hart	edmund.m.hart@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rinat	\N	f	A programmatic interface to the API provided by iNaturalist.	ropensci/rinat	sckott/rinat
-ritis	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	biology	f	\N	https://github.com/ropensci/ritis	\N	f	Wrapper to the Integrated Taxonomic Information Service (ITIS) API	ropensci/ritis	\N
-RMendeley	package	Carl Boettiger	cboettig@gmail.com	good	f	t	literature	t	t	https://github.com/ropensci/RMendeley	\N	f	This package is now deprecated. Programmatic interface to the Mendeley network -push up data to Mendeley as well as search and retrieve data from your private data and public Mendeley records. Updates pending upcoming API changes.	ropensci/RMendeley	\N
-rmetadata	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/rmetadata	\N	f	A high level R interface to many different scholarly metadata sources, which will include Crossref, any OAI-MH provider, Digital Public Library of America, Hathi Trust, Europeana, and more	ropensci/rmetadata	sckott/rmetadata
-RMETAR	package	Jan Wijffels	jwijffels@bnosac.be	good	f	t	biology	t	t	https://github.com/ropensci/RMETAR	pkg	t	A METAR decoder for R users, connecting to mdsplib (METAR Decoder Software Package Library - http://mdsplib.sourceforge.net/)	ropensci/RMETAR	\N
-rnbn	package	Tom August	tomaug@ceh.ac.uk	good	t	t	biology	t	f	https://github.com/ropensci/rnbn	\N	t	Access to the United Kingdom's National Biodiversity Network data.	ropensci/rnbn	sckott/rnbn
-RNeXML	package	Carl Boettiger	cboettig@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/RNeXML	\N	f	Semantically rich NeXML I/O in R -next generation XML for Phylogenetic data.	ropensci/RNeXML	\N
-rnoaa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rnoaa	\N	f	Access climate data from NOAA, including temperature and precipitation, as well as sea ice cover data, and extreme weather events	ropensci/rnoaa	sckott/rnoaa
-rnpn	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/rnpn	\N	f	Access phenological data from US National Phenology Network for plants and animals	ropensci/rnpn	sckott/rnpn
-rOBIS	package	Kate Crosby	kate.crosby@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/rOBIS	\N	f	R interface to the Ocean Biogeographic Information System	ropensci/rOBIS	\N
-rorcid	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/rorcid	\N	f	A programmatic interface the Orcid.org	ropensci/rorcid	sckott/rorcid
-rpensoft	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	literature	f	\N	https://github.com/ropensci/rpensoft	\N	f	Access to Pensoft journals full text and metadata. Not in active development.	ropensci/rpensoft	\N
-rplos	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	literature	t	f	https://github.com/ropensci/rplos	\N	f	Connects to the full-ext API of the Public Library of Science (PLOS). They provide a powerful search engine by exposing Solr search endpoints	ropensci/rplos	sckott/rplos
-rpmc	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	literature	f	\N	https://github.com/ropensci/rpmc	\N	f	R interface to PubMed Central article metadata.	ropensci/rpmc	\N
-rpwt	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	t	publication,literature	f	\N	https://github.com/ropensci/rpwt	\N	f	Pensoft Writing Tool R client	ropensci/rpwt	\N
-rrlite	package	Rich FitzJohn	rich.fitzjohn@gmail.com	good	t	t	databases	f	\N	https://github.com/ropensci/rrlite	\N	f	R Bindings to rlite	ropensci/rrlite	\N
-RSelenium	package	John Harrison	johndharrison0@gmail.com	good	t	t	infrastructure	t	f	https://github.com/ropensci/RSelenium	\N	f	An R client for Selenium Remote WebDriver	ropensci/RSelenium	\N
-rsnps	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rsnps	\N	f	Search and retrieve Single Nucleotide Polymorphism data from openSNP, a repository of direct-o-ustomer genetic test results	ropensci/rsnps	sckott/rsnps
-rspringer	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	f	t	literature	f	\N	https://github.com/ropensci/rspringer	\N	f	Full-ext access to Springer journals. Development pending upcoming API changes.	ropensci/rspringer	\N
-RStars	package	William Kyle Hamilton	kyle.hamilton@gmail.com	good	t	t	astronomy	t	f	https://github.com/ropensci/RStars	\N	f	Access to the Digital Universe Data set	ropensci/RStars	\N
-rvertnet	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rvertnet	\N	f	Access to specimen records for vertebrates across many museums though VertNet	ropensci/rvertnet	sckott/rvertnet
-rWBclimate	package	Edmund Hart	edmund.m.hart@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/rWBclimate	\N	f	Programmatic interface to the World Bank climate data used in the World Bank climate knowledge portal.	ropensci/rWBclimate	sckott/rWBclimate
-sandbox	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	t	biology	f	\N	https://github.com/ropensci/sandbox	\N	f	Interface to many altmetrics data services.	ropensci/sandbox	\N
-sheetseeR	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	t	biology	f	\N	https://github.com/ropensci/sheetseeR	\N	f	A quick and easy interface to Google Docs + SheetSee.js	ropensci/sheetseeR	\N
-sofa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	databases	f	\N	https://github.com/ropensci/sofa	\N	f	Easy R Connector to CouchDB	ropensci/sofa	\N
-solr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	infrastructure,databases	t	f	https://github.com/ropensci/solr	\N	f	An R client for Apache Solr	ropensci/solr	sckott/solr
-spocc	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/spocc	\N	f	Collect and map species occurrence data from GBIF, iNaturalist, Ecoengine, AntWeb, eBird, and USGS's BISON.	ropensci/spocc	sckott/spocc
-taxize	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/taxize	\N	f	Get taxonomic identifiers from many different databases; taxonomic synonyms; taxonomic hierarchies; retrieve common names, and more. Access to a dozen different sources	ropensci/taxize	sckott/taxize
-taxizesoap	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/taxizesoap	\N	f	taxize but for SOAP data sources	ropensci/taxizesoap	\N
-testdat	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	infrastructure	f	\N	https://github.com/ropensci/testdat	\N	f	A test suite to ensure that tabular data are correctly formatted	ropensci/testdat	\N
-traits	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	biology	f	\N	https://github.com/ropensci/traits	\N	f	A high level R package to acquire species trait data from many sources, including Polytraits, BETTYdb, NCBI, Phylomatic, and more.	ropensci/traits	\N
-treeBASE	package	Carl Boettiger	cboettig@gmail.com	good	t	t	biology	t	f	https://github.com/ropensci/treeBASE	\N	t	Programmatic interface to Treebase -a database of phylogenetic trees	ropensci/treeBASE	sckott/treeBASE
-ucipp	package	Luis Paulo F. Garcia	lpfgarcia@gmail.com	hiatus	t	t	computer science	f	\N	https://github.com/ropensci/ucipp	\N	f	\N	ropensci/ucipp	\N
-USAboundaries	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	history	t	f	https://github.com/ropensci/USAboundaries	\N	f	Historical boundaries of the United States. Map the United States (or the colonies that became the United States) on any date from 1629 to 2000. Contains both county and state/territory level polygons.	ropensci/USAboundaries	\N
-webchem	package	Eduard Szoecs	eduardszoecs@gmail.com	good	t	t	chemistry	t	f	https://github.com/ropensci/webchem	\N	f	Chemical Information from the Web	ropensci/webchem	EDiLD/webchem
-webmockr	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	f	t	infrastructure	f	\N	https://github.com/ropensci/webmockr	\N	f	\N	ropensci/webmockr	\N
-wellknown	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	maps	f	\N	https://github.com/ropensci/wellknown	\N	f	Convert Between WKT to GeoJSON	ropensci/wellknown	sckott/wellknown
-zenodo	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	literature	f	\N	https://github.com/ropensci/zenodo	\N	f	Deposit data (or any research object) into Zenodo	ropensci/zenodo	\N
+COPY repos (name, repo_type, maintainer, email, status, installable, on_cran, cran_archived, url, root, fork, description, build_vignettes, route_github_travis, route_appveyor) FROM stdin;
+alm	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/alm	\N	f	R wrapper to the almetrics API platform developed by PLoS  API -other publishers have built on this and work out of the box: CrossRef, Copernicus Publishers, and the Public Knowledge Project (PKP)	t	ropensci/alm	sckott/alm
+AntWeb	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	f	https://github.com/ropensci/AntWeb	\N	f	Access data from the world's largest ant database. Maintained and developed by the California Academy of Science	t	ropensci/AntWeb	sckott/AntWeb
+aRxiv	package	Karl Broman	kbroman@biostat.wisc.edu	good	t	t	f	https://github.com/ropensci/aRxiv	\N	f	Access to the aRxiv preprint repository	t	ropensci/aRxiv	sckott/aRxiv
+bmc	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/bmc	\N	f	An R interface to Biomed Central (BMC) search API and full text XML	t	ropensci/bmc	sckott/bmc
+bold	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/bold	\N	f	R client for BOLD Systems (Barcode Of Life Database).	t	ropensci/bold	sckott/bold
+citeulike	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/citeulike	\N	f	R interface to CiteULike	t	ropensci/citeulike	sckott/citeulike
+clifro	package	Blake Seers	blake.seers@gmail.com	good	t	t	f	https://github.com/ropensci/clifro	\N	f	An R client for New Zealand's National Climate Database	t	ropensci/clifro	sckott/clifro
+dependencies	package	Gavin Simpson	ucfagls@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/dependencies	\N	f	NA	t	ropensci/dependencies	sckott/dependencies
+dvn	package	Thomas J. Leeper	thosjleeper@gmail.com	good	t	t	f	https://github.com/ropensci/dvn	\N	f	Programmatic interface to the DataVerse Network.	t	ropensci/dvn	sckott/dvn
+ecoengine	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	f	https://github.com/ropensci/ecoengine	\N	f	Retrieve 3+ MM records, checklists and photos from Berkeley's ecoengine	t	ropensci/ecoengine	sckott/ecoengine
+ecoretriever	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	f	https://github.com/ropensci/ecoretriever	\N	f	R client wrapping the Python Ecoretriever software.	t	ropensci/ecoretriever	sckott/ecoretriever
+elastic	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/elastic	\N	f	An R client for Elasticsearch In early development	t	ropensci/elastic	sckott/elastic
+elife	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/elife	\N	f	R interface to the eLife API	t	ropensci/elife	sckott/elife
+EML	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/EML	\N	f	An R package for reading, writing, integrating and publishing data using the Ecological Metadata Language (EML) format.	t	ropensci/EML	sckott/EML
+floras	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/floras	\N	f	Web page scraping for eFloras, including the Flora of North America	t	ropensci/floras	sckott/floras
+fulltext	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/fulltext	\N	f	An high level R interface to many different sources for full text (or nearly) scholarly texts, including PLOS, PMC, PeerJ, eLife, arXiv, and many more	t	ropensci/fulltext	sckott/fulltext
+geojsonio	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/geojsonio	\N	f	A package to convert many data formats to geoJSON or Bostock's topoJSON	t	ropensci/geojsonio	sckott/geojsonio
+gender	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	f	https://github.com/ropensci/gender	\N	f	gender is an R package to encode gender based on names and dates of birth	t	ropensci/gender	sckott/gender
+geonames	package	Barry Rowlingson	b.rowlingson@gmail.com	good	t	t	f	https://github.com/ropensci/geonames	\N	f	Grab data from the GeoNames geographical database which covers all countries and contains over eight million placenames	t	ropensci/geonames	sckott/geonames
+gigadb	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/gigadb	\N	f	NA	t	ropensci/gigadb	sckott/gigadb
+gistr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/gistr	\N	f	gistr is a light interface to GitHub's gists for R	t	ropensci/gistr	sckott/gistr
+git2r	package	Stefan Widgren	stefan.widgren@gmail.com	good	t	t	f	https://github.com/ropensci/git2r	\N	f	Git bindings from R	t	ropensci/git2r	sckott/git2r
+gitr	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	f	https://github.com/ropensci/gitr	\N	f	git/github from R	t	ropensci/gitr	sckott/gitr
+historydata	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	f	https://github.com/ropensci/historydata	\N	f	An R package with datasets of interest to historians. It is primarily intended for pedagogic purposes in teaching historians how to use R	t	ropensci/historydata	sckott/historydata
+ICES	package	Karthik Ram	karthik.ram@gmail.com	hiatus	f	f	\N	https://github.com/ropensci/ICES	\N	f	R interface to the ICES DATA PORTAL	t	ropensci/ICES	sckott/ICES
+IEEER	package	Saul Wiggin	saulwiggin@googlemail.com	good	t	f	\N	https://github.com/ropensci/IEEER	\N	f	Interface to the IEEE Xplore Gateway	t	ropensci/IEEER	sckott/IEEER
+mdextract	package	Edmund Hart	edmund.m.hart@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/mdextract	\N	f	package to extract metadata from data	t	ropensci/mdextract	sckott/mdextract
+mocker	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/mocker	\N	f	Cache API calls to the web	t	ropensci/mocker	sckott/mocker
+neotoma	package	Simon Goring	goring@wisc.edu	good	t	t	f	https://github.com/ropensci/neotoma	\N	f	Search for sites and download data for use in analytical workflows of paleoecological research using the Neotoma Paleoecological Database	t	ropensci/neotoma	sckott/neotoma
+ots	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/ots	\N	f	ocean time series datasets	t	ropensci/ots	sckott/ots
+paleobioDB	package	Sara Varela	svarela@paleobiogeography.org	good	t	t	f	https://github.com/ropensci/paleobioDB	\N	f	Access data from the Paleobiology Database, a warehouse of paleobiology database	t	ropensci/paleobioDB	sckott/paleobioDB
+pangaear	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/pangaear	\N	f	An R client to interact with the Pangaea database.  In early development	t	ropensci/pangaear	sckott/pangaear
+pleiades	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/pleiades	\N	f	Search for and retrieve metadata and spatial location data on archeological places and names from Pleiades.  	t	ropensci/pleiades	sckott/pleiades
+plotly	package	Chris Parmer	chris@plot.ly	good	t	t	\N	https://github.com/ropensci/plotly	\N	f	Programmatic interface to the Plot.ly API -construct plots with ggplot2 and push to Plot.ly for an interactive plot with a few lines of code	t	ropensci/plotly	sckott/plotly
+prism	package	Edmund Hart	edmund.m.hart@gmail.com	good	f	f	\N	https://github.com/ropensci/prism	\N	f	Download data from the Oregon PRISM climate data project http://www.prism.oregonstate.edu/	t	ropensci/prism	sckott/prism
+rAltmetric	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	f	https://github.com/ropensci/rAltmetric	\N	f	Programmatic interface to article-evel metrics data from Altmetric.com	t	ropensci/rAltmetric	sckott/rAltmetric
+rAvis	package	Sara Varela	svarela@paleobiogeography.org	good	t	t	f	https://github.com/ropensci/rAvis	\N	f	Download occurrence data for bird species, and associated metadata from ProyectoAvis, a citizen science bird project in Spain.	t	ropensci/rAvis	sckott/rAvis
+rbhl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rbhl	\N	f	Access full text and metadata on scanned and OCR text for biodiversity literature from Biodiversity Heritage Library	t	ropensci/rbhl	sckott/rbhl
+rbison	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rbison	\N	f	R client for USGS's BISON (Biodiversity Information Serving Our Nation).	t	ropensci/rbison	sckott/rbison
+rcrossref	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rcrossref	\N	f	An R interface to Crossref metadata search API	t	ropensci/rcrossref	sckott/rcrossref
+RCryptsy	package	William Kyle Hamilton	kyle.hamilton@gmail.com	good	t	t	f	https://github.com/ropensci/RCryptsy	\N	f	Basic Public API for the Crypto-Currency exchange Cryptsy 	t	ropensci/RCryptsy	sckott/RCryptsy
+rDat	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/rDat	\N	f	NA	t	ropensci/rDat	sckott/rDat
+rdatacite	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/rdatacite	\N	f	Wrapper to DataCite metadata	t	ropensci/rdatacite	sckott/rdatacite
+rdataone	package	Matthew Jones	jones@nceas.ucsb.edu	hiatus	f	f	\N	https://github.com/ropensci/rdataone	\N	t	R package for reading and writing data at DataONE data repositories	t	ropensci/rdataone	sckott/rdataone
+rdryad	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rdryad	\N	f	Push data to and get data from Dryad a repository of data associated with published scholarly papers. Development pending upcoming API changes.	t	ropensci/rdryad	sckott/rdryad
+rebi	package	Najko Jahn	najko.jahn@uni-bielefeld.de	good	t	f	\N	https://github.com/ropensci/rebi	\N	t	Access to the European PubMed Central database of papers and metadata	t	ropensci/rebi	sckott/rebi
+rebird	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rebird	\N	f	Search and acquire occurrence records of bird sightings collated in the eBird database	t	ropensci/rebird	sckott/rebird
+rentrez	package	David Winter	david.winter@gmail.com	good	t	t	f	https://github.com/ropensci/rentrez	\N	f	rentrez provides functions that work with the NCBI eutils to search or download data from various NCBI databases	t	ropensci/rentrez	sckott/rentrez
+Reol	package	Barb Banbury	darwinthesun@gmail.com	good	t	t	f	https://github.com/ropensci/reol	\N	f	R client to the Encyclopedia of Life a website and database of data/images/descriptions of species.	t	ropensci/reol	sckott/reol
+rfigshare	package	Carl Boettiger	cboettig at gmail.com	good	t	t	f	https://github.com/ropensci/rfigshare	\N	f	Push data, figures, and text to, and search and retrieve data from, Figshare from R	t	ropensci/rfigshare	sckott/rfigshare
+rfishbase	package	Carl Boettiger	cboettig@gmail.com	good	t	t	f	https://github.com/ropensci/rfishbase	\N	f	Access any fish data from Fishbase.org, including occurrence records, habitat data, and more	t	ropensci/rfishbase	sckott/rfishbase
+rfisheries	package	Karthik Ram	karthik.ram@gmail.com	good	t	t	f	https://github.com/ropensci/rfisheries	\N	f	Search and retrieve data from the OpenFisheries.org, currently providing access to global capture fishing landings from the Food and Agriculture Organization (FAO) of the United Nations	t	ropensci/rfisheries	sckott/rfisheries
+rflybase	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/rflybase	\N	f	A wrapper to FlyBase data	t	ropensci/rflybase	sckott/rflybase
+rgauges	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rgauges	\N	f	Interface to Gaug.es API	t	ropensci/rgauges	sckott/rgauges
+rgbif	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rgbif	\N	f	Access more than 400 million species occurrence records from across the globe in one place, from the Global Biodiversity Information Facility	t	ropensci/rgbif	sckott/rgbif
+rglobi	package	Jorrit Poelen	jhpoelen+rglobi@gmail.com	good	t	t	f	https://github.com/ropensci/rglobi	\N	f	R library to access species interaction data of http://globalbioticinteractions.org	t	ropensci/rglobi	sckott/rglobi
+rgpdd	package	Carl Boettiger	cboettig@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/rgpdd	\N	f	Interface to the Global Population Dynamics Database, http://www3.imperial.ac.uk/cpb/databases/gpdd	t	ropensci/rgpdd	sckott/rgpdd
+rhindawi	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/rhindawi	\N	f	R interface to the Hindawi Journals metadata and corpus	t	ropensci/rhindawi	sckott/rhindawi
+rImpactStory	package	Karthik Ram	karthik.ram@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/rImpactStory	\N	f	Programmatic interface to ImpactStory	t	ropensci/rImpactStory	sckott/rImpactStory
+rinat	package	Edmund Hart	edmund.m.hart@gmail.com	good	t	t	f	https://github.com/ropensci/rinat	\N	f	A programmatic interface to the API provided by iNaturalist.	t	ropensci/rinat	sckott/rinat
+ritis	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/ritis	\N	f	Wrapper to the Integrated Taxonomic Information Service (ITIS) API	t	ropensci/ritis	sckott/ritis
+RMendeley	package	Carl Boettiger	cboettig@gmail.com	good	f	t	t	https://github.com/ropensci/RMendeley	\N	f	This package is now deprecated. Programmatic interface to the Mendeley network -push up data to Mendeley as well as search and retrieve data from your private data and public Mendeley records. Updates pending upcoming API changes.	t	ropensci/RMendeley	sckott/RMendeley
+rmetadata	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/rmetadata	\N	f	A high level R interface to many different scholarly metadata sources, which will include Crossref, any OAI-MH provider, Digital Public Library of America, Hathi Trust, Europeana, and more	t	ropensci/rmetadata	sckott/rmetadata
+RMETAR	package	Jan Wijffels	jwijffels@bnosac.be	good	f	t	t	https://github.com/ropensci/RMETAR	pkg	t	A METAR decoder for R users, connecting to mdsplib (METAR Decoder Software Package Library - http://mdsplib.sourceforge.net/)	t	ropensci/RMETAR	sckott/RMETAR
+rnbn	package	Tom August	tomaug@ceh.ac.uk	good	t	t	f	https://github.com/ropensci/rnbn	\N	t	Access to the United Kingdom's National Biodiversity Network data.	t	ropensci/rnbn	sckott/rnbn
+RNeXML	package	Carl Boettiger	cboettig@gmail.com	good	t	t	f	https://github.com/ropensci/RNeXML	\N	f	Semantically rich NeXML I/O in R -next generation XML for Phylogenetic data.	t	ropensci/RNeXML	sckott/RNeXML
+rnoaa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rnoaa	\N	f	Access climate data from NOAA, including temperature and precipitation, as well as sea ice cover data, and extreme weather events	t	ropensci/rnoaa	sckott/rnoaa
+rnpn	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/rnpn	\N	f	Access phenological data from US National Phenology Network for plants and animals	t	ropensci/rnpn	sckott/rnpn
+rOBIS	package	Kate Crosby	kate.crosby@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/rOBIS	\N	f	R interface to the Ocean Biogeographic Information System	t	ropensci/rOBIS	sckott/rOBIS
+rorcid	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/rorcid	\N	f	A programmatic interface the Orcid.org	t	ropensci/rorcid	sckott/rorcid
+rpensoft	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/rpensoft	\N	f	Access to Pensoft journals full text and metadata. Not in active development.	t	ropensci/rpensoft	sckott/rpensoft
+rplos	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rplos	\N	f	Connects to the full-ext API of the Public Library of Science (PLOS). They provide a powerful search engine by exposing Solr search endpoints	t	ropensci/rplos	sckott/rplos
+rpmc	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/rpmc	\N	f	R interface to PubMed Central article metadata.	t	ropensci/rpmc	sckott/rpmc
+rpwt	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/rpwt	\N	f	Pensoft Writing Tool R client	t	ropensci/rpwt	sckott/rpwt
+RSelenium	package	John Harrison	johndharrison0@gmail.com	good	t	t	f	https://github.com/ropensci/RSelenium	\N	f	An R client for Selenium Remote WebDriver	t	ropensci/RSelenium	sckott/RSelenium
+rsnps	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rsnps	\N	f	Search and retrieve Single Nucleotide Polymorphism data from openSNP, a repository of direct-o-ustomer genetic test results	t	ropensci/rsnps	sckott/rsnps
+rspringer	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	f	f	\N	https://github.com/ropensci/rspringer	\N	f	Full-ext access to Springer journals. Development pending upcoming API changes.	t	ropensci/rspringer	sckott/rspringer
+rvertnet	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rvertnet	\N	f	Access to specimen records for vertebrates across many museums though VertNet	t	ropensci/rvertnet	sckott/rvertnet
+rWBclimate	package	Edmund Hart	edmund.m.hart@gmail.com	good	t	t	f	https://github.com/ropensci/rWBclimate	\N	f	Programmatic interface to the World Bank climate data used in the World Bank climate knowledge portal.	t	ropensci/rWBclimate	sckott/rWBclimate
+sandbox	package	Scott Chamberlain	myrmecocystus@gmail.com	deprecated	t	f	\N	https://github.com/ropensci/sandbox	\N	f	Interface to many altmetrics data services.	t	ropensci/sandbox	sckott/sandbox
+sheetseeR	package	Karthik Ram	karthik.ram@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/sheetseeR	\N	f	A quick and easy interface to Google Docs + SheetSee.js	t	ropensci/sheetseeR	sckott/sheetseeR
+solr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/solr	\N	f	An R client for Apache Solr	t	ropensci/solr	sckott/solr
+spocc	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/spocc	\N	f	Collect and map species occurrence data from GBIF, iNaturalist, Ecoengine, AntWeb, eBird, and USGS's BISON.	t	ropensci/spocc	sckott/spocc
+taxize	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/taxize	\N	f	Get taxonomic identifiers from many different databases; taxonomic synonyms; taxonomic hierarchies; retrieve common names, and more. Access to a dozen different sources	t	ropensci/taxize	sckott/taxize
+testdat	package	Karthik Ram	karthik.ram@gmail.com	good	t	f	\N	https://github.com/ropensci/testdat	\N	f	A test suite to ensure that tabular data are correctly formatted	t	ropensci/testdat	sckott/testdat
+traits	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/traits	\N	f	A high level R package to acquire species trait data from many sources, including Polytraits, BETTYdb, NCBI, Phylomatic, and more.	t	ropensci/traits	sckott/traits
+treebase	package	Carl Boettiger	cboettig@gmail.com	good	t	t	f	https://github.com/ropensci/treeBASE	\N	t	Programmatic interface to Treebase -a database of phylogenetic trees	t	ropensci/treeBASE	sckott/treeBASE
+ucipp	package	Luís Paulo F. Garcia	lpfgarcia@gmail.com	hiatus	t	f	\N	https://github.com/ropensci/ucipp	\N	f	NA	t	ropensci/ucipp	sckott/ucipp
+USAboundaries	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	f	https://github.com/ropensci/USAboundaries	\N	f	Historical boundaries of the United States. Map the United States (or the colonies that became the United States) on any date from 1629 to 2000. Contains both county and state/territory level polygons.	t	ropensci/USAboundaries	sckott/USAboundaries
+USAboundariesData	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	f	f	https://github.com/ropensci/USAboundariesData	\N	f	Datasets for the 'USAboundaries' package	t	ropensci/USAboundariesData	sckott/USAboundariesData
+zenodo	package	Karthik Ram	karthik.ram@gmail.com	good	t	f	\N	https://github.com/ropensci/zenodo	\N	f	Deposit data (or any research object) into Zenodo	t	ropensci/zenodo	sckott/zenodo
+chromer	package	Matthew Pennell	mwpennell@gmail.com	good	t	t	f	https://github.com/ropensci/chromer	\N	f	package for interacting with the chromosome counts database (CCDB) at http://ccdb.tau.ac.il	t	ropensci/chromer	sckott/chromer
+ckanr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/ckanr	\N	f	R client for CKAN RESTful API	t	ropensci/ckanr	sckott/ckanr
+dashboard	package	Karthik Ram	karthik.ram@gmail.com	good	t	f	\N	https://github.com/ropensci/dashboard	\N	f	A R package dashboard generator	t	ropensci/dashboard	sckott/dashboard
+ggit	package	Karthik Ram	karthik.ram@gmail.com	good	t	f	\N	https://github.com/ropensci/ggit	\N	f	Git visualization tools for git2r	t	ropensci/ggit	sckott/ggit
+musemeta	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/musemeta	\N	f	R Client for Scraping Museum Metadata, including The Metropolitan Museum of Art, the Canadian Science & Technology Museum Corporation, the National Gallery of Art, and the Getty Museum, and more to come	t	ropensci/musemeta	sckott/musemeta
+rdpla	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/rdpla	\N	f	An R client to interact with Digital Public Library of America (DPLA) metadata	t	ropensci/rdpla	sckott/rdpla
+redland-bindings	package	Matthew Jones	jones@nceas.ucsb.edu	good	t	f	\N	https://github.com/ropensci/redland-bindings	R/redland	t	Redland librdf language bindings	t	ropensci/redland-bindings	sckott/redland-bindings
+rerddap	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/rerddap	\N	f	R client for working with ERDDAP servers	t	ropensci/rerddap	sckott/rerddap
+reuropeana	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/reuropeana	\N	f	An R client to interact with Europeana metadata	t	ropensci/reuropeana	sckott/reuropeana
+rGEM	package	Abaghan Ghahraman	abaghan@gmail.com	good	t	f	\N	https://github.com/ropensci/rGEM	\N	f	A wrapper around GEM data	t	ropensci/rGEM	sckott/rGEM
+RStars	package	William Kyle Hamilton	kyle.hamilton@gmail.com	good	t	t	f	https://github.com/ropensci/RStars	\N	f	Access to the Digital Universe Data set	t	ropensci/RStars	sckott/RStars
+taxizesoap	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/taxizesoap	\N	f	taxize but for SOAP data sources	t	ropensci/taxizesoap	sckott/taxizesoap
+webmockr	package	Scott Chamberlain	myrmecocystus@gmail.com	hiatus	f	f	\N	https://github.com/ropensci/webmockr	\N	f	NA	t	ropensci/webmockr	sckott/webmockr
+binomen	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/binomen	\N	f	Taxonomic name classes and parsing methods	t	ropensci/binomen	sckott/binomen
+cartographer	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	f	\N	https://github.com/ropensci/cartographer	\N	f	A wrapper around d3-carto-map and the d3.js visualization library to create interactive maps at the R console and in R documents.	t	ropensci/cartographer	sckott/cartographer
+csl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/csl	\N	f	Parse CSL Styles	t	ropensci/csl	sckott/csl
+elasticdsl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/elasticdsl	\N	f	Elasticsearch DSL	t	ropensci/elasticdsl	sckott/elasticdsl
+etseed	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/etseed	\N	f	R client to interact with the etcd key-value data store	t	ropensci/etseed	sckott/etseed
+finch	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/finch	\N	f	Parse and create Darwin Core Simple and Archive Files	t	ropensci/finch	sckott/finch
+genderdata	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	f	\N	https://github.com/ropensci/genderdata	\N	t	Historical data sets for the study of gender	t	ropensci/genderdata	sckott/genderdata
+hathi	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/hathi	\N	f	An R client for HathiTrust API	t	ropensci/hathi	sckott/hathi
+internetarchive	package	Lincoln Mullen	lincoln@lincolnmullen.com	good	t	t	f	https://github.com/ropensci/internetarchive	\N	f	An API Client for the Internet Archive	t	ropensci/internetarchive	sckott/internetarchive
+jqr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/jqr	\N	f	An R client for jq	t	ropensci/jqr	sckott/jqr
+lawn	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	f	https://github.com/ropensci/lawn	\N	f	R Client for turf.js for Geospatial Analysis	t	ropensci/lawn	sckott/lawn
+nodbi	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/nodbi	\N	f	Simplified document database manipulation and analysis	t	ropensci/nodbi	sckott/nodbi
+opencontext	package	Ben Marwick	bmarwick@uw.edu	good	t	f	\N	https://github.com/ropensci/opencontext	\N	f	API Client for the Open Context Archeological Database	t	ropensci/opencontext	sckott/opencontext
+parasiteR	package	Tad Dallas	tdallas@uga.edu	good	t	f	\N	https://github.com/ropensci/parasiteR	\N	f	Parasite occurrence records from the London Natural History Museum's Host-Parasite database	t	ropensci/parasiteR	sckott/parasiteR
+proj	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/proj	\N	f	R Client for proj4js	t	ropensci/proj	sckott/proj
+rchie	package	Noam Ross	noam.ross@gmail.com	good	t	f	\N	https://github.com/ropensci/rchie	\N	f	A Parser for ArchieML	t	ropensci/rchie	sckott/rchie
+rdopa	package	Joona Lehtomaki	joona.lehtomaki@gmail.com	good	t	f	\N	https://github.com/ropensci/rdopa	\N	f	R client to Joint Research Centre's DOPA REST API	t	ropensci/rdopa	sckott/rdopa
+RedisAPI	package	Rich FitzJohn	rich.fitzjohn@gmail.com	good	t	f	\N	https://github.com/ropensci/RedisAPI	\N	f	Wrapper For Redis API	t	ropensci/RedisAPI	sckott/RedisAPI
+rif	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/rif	\N	f	Client for Neuroscience Information Framework APIs	t	ropensci/rif	sckott/rif
+rrlite	package	Rich FitzJohn	rich.fitzjohn@gmail.com	good	t	f	\N	https://github.com/ropensci/rrlite	\N	f	R Bindings to rlite	t	ropensci/rrlite	sckott/rrlite
+sofa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/sofa	\N	f	Easy R Connector to CouchDB	t	ropensci/sofa	sckott/sofa
+webchem	package	Eduard Szoecs	eduardszoecs@gmail.com	good	t	t	f	https://github.com/ropensci/webchem	\N	f	Chemical Information from the Web	t	ropensci/webchem	sckott/webchem
+wellknown	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/wellknown	\N	f	Convert Between WKT to GeoJSON	t	ropensci/wellknown	sckott/wellknown
+rotl	package	Francois Michonneau	francois.michonneau@gmail.com	good	t	t	\N	https://github.com/ropensci/rotl	\N	f	Interface to Open Tree of Life API	t	ropensci/rotl	sckott/rotl
+ropkgs	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropensci/ropkgs	\N	f	ropensci registry	t	ropensci/ropkgs	sckott/ropkgs
+rusda	package	Franz-Sebastian Krah	f.krah@mailbox.org	good	t	f	\N	https://github.com/ropensci/rusda	\N	f	Interface to USDA Databases	t	ropensci/rusda	sckott/rusda
+oai	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/oai	\N	f	R client to work with OAI-PMH services	t	ropensci/oai	sckott/oai
+apipkgen	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/apipkgen	\N	f	Generate a HTTP API wrapper package from a yaml template for the API	t	ropenscilabs/apipkgen	sckott/apipkgen
+appl	package	Jeroen Ooms	jeroen.ooms@stat.ucla.edu	good	t	f	\N	https://github.com/ropensci/appl	\N	f	APPL is a C++ toolkit for approximate POMDP planning. Originally, it is based on the SARSOP algorithm for solving discrete POMDPs.	t	ropensci/appl	sckott/appl
+aspacer	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/aspacer	\N	f	Client for the ArchiveSpace API (http://archivesspace.org/)	t	ropenscilabs/aspacer	sckott/aspacer
+atomize	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/atomize	\N	f	Scatter Functions into New Packages	t	ropenscilabs/atomize	sckott/atomize
+brranching	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/brranching	\N	f	Fetch Phylogenies from Many Sources	t	ropensci/brranching	sckott/brranching
+ccafs	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/ccafs	\N	f	Client for Climate Change, Agriculture, and Food Security (CCAFS) General Circulation Models (GCM) data. Data is stored in Amazon S3, from which we provide functions to fetch data	t	ropenscilabs/ccafs	sckott/ccafs
+cmip	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/cmip	\N	f	Client for CMIP data. Data is stored on an FTP server, from which we provide functions to fetch data	t	ropenscilabs/cmip	sckott/cmip
+colorpiler	package	Mika Braginsky	mika.br@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/colorpiler	\N	f	Provides community-driven color palettes	t	ropenscilabs/colorpiler	sckott/colorpiler
+convertr	package	Gordon Shotwell	g.e.shotwell@gmaill.com	good	t	f	\N	https://github.com/ropenscilabs/convertr	\N	f	Provides conversion functionality between a broad range of scientific, historical, and industrial unit types	t	ropenscilabs/convertr	sckott/convertr
+cored	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/cored	\N	f	Client for the CORE API (https://core.ac.uk/docs/)	t	ropenscilabs/cored	sckott/cored
+datapack	package	Matthew B. Jones	jones@nceas.ucsb.edu	good	t	t	\N	https://github.com/ropensci/datapack	\N	f	A Flexible Container to Transport and Manipulate Data and Associated Resources	t	ropensci/datapack	sckott/datapack
+datapkg	package	Jeroen Ooms	jeroen.ooms@stat.ucla.edu	good	t	f	\N	https://github.com/ropenscilabs/datapkg	\N	f	Convenience functions for reading and writing datasets following the 'data packagist' format	t	ropenscilabs/datapkg	sckott/datapkg
+dirdf	package	Henrick Bengtsson	henrikb@braju.com	good	t	f	\N	https://github.com/ropenscilabs/dirdf	\N	f	Extracts Metadata from Directory and File Names	t	ropenscilabs/dirdf	sckott/dirdf
+eechidna	package	Ben Marwick	benmarwick@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/eechidna	\N	f	Exploring Election and Census Highly Informative Data Nationally for Australia	t	ropenscilabs/eechidna	sckott/eechidna
+gdoc	package	Jennifer Bryan	jenny@stat.ubc.ca	good	t	f	\N	https://github.com/ropenscilabs/gdoc	\N	f	An R Markdown Template for Google Docs	t	ropenscilabs/gdoc	sckott/gdoc
+geoaxe	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/geoaxe	\N	f	Split 'geospatial' objects into pieces. Includes support for some spatial object inputs, 'Well-Known Text', and 'GeoJSON'	t	ropenscilabs/geoaxe	sckott/geoaxe
+geojson	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/geojson	\N	f	GeoJSON Classes	t	ropenscilabs/geojson	sckott/geojson
+geojsonlint	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/geojsonlint	\N	f	Tools for linting 'GeoJSON'. Includes tools for interacting with the online tool, the Javascript library geojsonhint, and validating against a GeoJSON schema via the Javascript library	t	ropenscilabs/geojsonlint	sckott/geojsonlint
+geolocart	package	Maëlle Salmon	maelle.salmon@yahoo.se	good	f	f	\N	https://github.com/ropenscilabs/geolocart	\N	f	The Package Aims at Geoloparsing Scientific Articles	t	ropenscilabs/geolocart	sckott/geolocart
+geoops	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/geoops	\N	f	GeoJSON Manipulation Operations	t	ropenscilabs/geoops	sckott/geoops
+getlandsat	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/getlandsat	\N	f	Get Landsat 8 Data from AWS public data sets. Includes functions for listing images and fetching them	t	ropenscilabs/getlandsat	sckott/getlandsat
+gtfsr	package	Elaine McVey	elaine.mcvey@transloc.com	good	t	f	\N	https://github.com/ropenscilabs/gtfsr	\N	f	Working with GTFS (General Transit Feed Specification) feeds in R	t	ropenscilabs/gtfsr	sckott/gtfsr
+gutenbergr	package	David Robinson	admiral.david@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/gutenbergr	\N	f	Download and Process Public Domain Works from Project Gutenberg	t	ropenscilabs/gutenbergr	sckott/gutenbergr
+hunspell	package	Jeroen Ooms	jeroen.ooms@stat.ucla.edu	good	t	t	\N	https://github.com/ropensci/hunspell	\N	f	A spell checker and morphological analyzer library designed for languages with rich morphology and complex word compounding or character encoding	t	ropensci/hunspell	sckott/hunspell
+jsonvalidate	package	Rich FitzJohn	rich.fitzjohn@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/jsonvalidate	\N	f	Validate JSON. Uses is-my-json-valid to validate JSON against a schema	t	ropenscilabs/jsonvalidate	sckott/jsonvalidate
+mapr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/mapr	\N	f	Utilities for 'vizualizing' species occurrence data. Includes functions to 'vizualize' occurrence data from 'spocc', 'rgbif', and other packages. Mapping options included for base R plots, 'ggplot2', and various interactive maps	t	ropensci/mapr	sckott/mapr
+mregions	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/mregions	\N	f	Marine regions from Marineregions.org	t	ropenscilabs/mregions	sckott/mregions
+opencage	package	Maëlle Salmon	maelle.salmon@yahoo.se	good	t	t	\N	https://github.com/ropenscilabs/opencage	\N	f	Interface to the OpenCage API	t	ropenscilabs/opencage	sckott/opencage
+originr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/originr	\N	f	Fetch Species Origin Data from the Web	t	ropenscilabs/originr	sckott/originr
+osmplotr	package	Mark Padgham	mark.padgham@email.com	good	t	t	\N	https://github.com/ropenscilabs/osmplotr	\N	f	Customisable Images of OpenStreetMap Data	t	ropenscilabs/osmplotr	sckott/osmplotr
+pdftools	package	Jeroen Ooms	jeroen.ooms@stat.ucla.edu	good	t	t	\N	https://github.com/ropensci/pdftools	\N	f	Extract Text and Data from PDF Documents	t	ropensci/pdftools	sckott/pdftools
+rgeospatialquality	package	Javier Otegui	javier.otegui@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/rgeospatialquality	\N	f	Wrapper for the Geospatial Data Quality REST API	t	ropenscilabs/rgeospatialquality	sckott/rgeospatialquality
+riodata	package	Gabriela de Queiroz	gabidequeiroz@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/riodata	\N	f	Get data related to transportation and cultural places from Rio de Janeiro, Brazil	t	ropenscilabs/riodata	sckott/riodata
+robotstxt	package	Peter Meissner	retep.meissner@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/robotstxt	\N	f	A robots.txt Parser and Webbot/Spider/Crawler Permissions Checker	t	ropenscilabs/robotstxt	sckott/robotstxt
+ropenaq	package	Maëlle Salmon	maelle.salmon@yahoo.se	good	t	f	\N	https://github.com/ropenscilabs/ropenaq	\N	f	Access Air Quality Data From OpenAQ	t	ropenscilabs/ropenaq	sckott/ropenaq
+rredlist	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/rredlist	\N	f	'IUCN' Red List (<http://apiv3.iucnredlist.org/api/v3/docs>) client. The 'IUCN' Red List is a global list of threatened and endangered species. Functions cover all of the Red List 'API' routes	t	ropenscilabs/rredlist	sckott/rredlist
+rwdpa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/rwdpa	\N	f	Client for the World Database of Protected Areas. Fetching metadata on the areas, fetching shape files for each, functions for simplifying polygons, for plotting, and converting to WKT to faciltate downstream queries of species occurrence data	t	ropenscilabs/rwdpa	sckott/rwdpa
+scrubr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropenscilabs/scrubr	\N	f	Clean biological occurrence records. Includes functionality for cleaning based on various aspects of spatial coordinates, unlikely values due to political 'centroids', coordinates based on where collections of specimens are held, and more	t	ropenscilabs/scrubr	sckott/scrubr
+snowball	package	Jonathan Carroll	jono@jcarroll.com.au	good	t	f	\N	https://github.com/ropenscilabs/snowball	\N	f	Spin up a managed cluster and perform parallel calculations	t	ropenscilabs/snowball	sckott/snowball
+solrium	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	t	\N	https://github.com/ropensci/solrium	\N	f	Provides a set of functions for querying and parsing data from 'Solr' (<http://lucene.apache.org/solr>) 'endpoints' (local and remote), including search, 'faceting', 'highlighting', 'stats', and 'more like this'. In addition, some functionality is included for creating, deleting, and updating documents in a 'Solr' 'database'	t	ropensci/solrium	sckott/solrium
+spenv	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/spenv	\N	f	Add Environmental Data to Spatial Data	t	ropenscilabs/spenv	sckott/spenv
+splister	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/splister	\N	f	Match Species Lists Against Reference List	t	ropenscilabs/splister	sckott/splister
+spplist	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/spplist	\N	f	Get species lists form many data sources, including any available via the spocc and rgbif packages	t	ropenscilabs/spplist	sckott/spplist
+spplit	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/spplit	\N	f	Combine literature and species occurrence data. Literature data sources include the Biodiversity Heritage Library, and species occurrence data sources include the Global Biodiversity Information Facility (GBIF; <http://www.gbif.org/>) and the Integrated Digitized Biocollections (iDigBio; <https://www.idigbio.org/>). More data sources to come.	t	ropenscilabs/spplit	sckott/spplit
+stplanr	package	Robin Lovelace	rob00x@gmail.com	good	t	t	\N	https://github.com/ropensci/stplanr	\N	f	Functionality and data access tools for transport planning, including origin-destination analysis, route allocation and modelling travel patterns	t	ropensci/stplanr	sckott/stplanr
+taxa	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/taxa	\N	f	Taxonomic Classes for R	t	ropenscilabs/taxa	sckott/taxa
+taxizedb	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/taxizedb	\N	f	Tools for Working with Taxonomic Databases	t	ropenscilabs/taxizedb	sckott/taxizedb
+urltemplate	package	Scott Chamberlain	myrmecocystus@gmail.com	good	f	f	\N	https://github.com/ropenscilabs/urltemplate	\N	f	URL templating following RFC6570 (<https://tools.ietf.org/html/rfc6570#page-14>)	t	ropenscilabs/urltemplate	sckott/urltemplate
+vcr	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/vcr	\N	f	Record test suite 'HTTP' requests and replay them during future test runs	t	ropenscilabs/vcr	sckott/vcr
+dissem	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/dissem	\N	f	dissem.in client for R	t	ropenscilabs/dissem	sckott/dissem
+sparqldsl	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://github.com/ropenscilabs/sparqldsl	\N	f	SPARQL DSL client for R	t	ropenscilabs/sparqldsl	sckott/sparqldsl
+riem	package	Maëlle Salmon	maelle.salmon@yahoo.se	good	t	t	\N	https://github.com/ropenscilabs/riem	\N	f	Accesses Weather Data from the Iowa Environment Mesonet	t	ropenscilabs/riem	sckott/riem
 \.
 
 
