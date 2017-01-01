@@ -127,6 +127,7 @@ class ROApp < Sinatra::Application
   end
 
   get '/repos/?:name?' do
+    headers_get
     begin
       data = get_repo(params)
       raise Exception.new('no results found') if data.length.zero?
