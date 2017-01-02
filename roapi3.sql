@@ -15,14 +15,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -35,7 +35,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: appveyor; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: appveyor; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE appveyor (
@@ -63,7 +63,7 @@ CREATE TABLE appveyor (
 ALTER TABLE appveyor OWNER TO sacmac;
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE categories (
@@ -75,7 +75,7 @@ CREATE TABLE categories (
 ALTER TABLE categories OWNER TO sacmac;
 
 --
--- Name: citations; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: citations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE citations (
@@ -88,7 +88,7 @@ CREATE TABLE citations (
 ALTER TABLE citations OWNER TO sacmac;
 
 --
--- Name: cran; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: cran; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cran (
@@ -130,7 +130,7 @@ CREATE TABLE cran (
 ALTER TABLE cran OWNER TO sacmac;
 
 --
--- Name: cranlogs; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: cranlogs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cranlogs (
@@ -144,7 +144,7 @@ CREATE TABLE cranlogs (
 ALTER TABLE cranlogs OWNER TO sacmac;
 
 --
--- Name: github; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: github; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE github (
@@ -165,7 +165,7 @@ CREATE TABLE github (
 ALTER TABLE github OWNER TO sacmac;
 
 --
--- Name: groupings; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: groupings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE groupings (
@@ -177,7 +177,7 @@ CREATE TABLE groupings (
 ALTER TABLE groupings OWNER TO sacmac;
 
 --
--- Name: repos; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: repos; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE repos (
@@ -202,7 +202,7 @@ CREATE TABLE repos (
 ALTER TABLE repos OWNER TO sacmac;
 
 --
--- Name: travis; Type: TABLE; Schema: public; Owner: sacmac
+-- Name: travis; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE travis (
@@ -227,7 +227,7 @@ CREATE TABLE travis (
 ALTER TABLE travis OWNER TO sacmac;
 
 --
--- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: appveyor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY appveyor (projectid, accountid, accountname, name, repositoryname, repositorybranch, created, updated, buildid, buildnumber, version, message, branch, commitid, committername, status, finished, inserted) FROM stdin;
@@ -278,7 +278,7 @@ COPY appveyor (projectid, accountid, accountname, name, repositoryname, reposito
 
 
 --
--- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY categories (name, category) FROM stdin;
@@ -683,7 +683,7 @@ zissou	scraping
 
 
 --
--- Data for Name: citations; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: citations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY citations (name, doi, citation) FROM stdin;
@@ -832,7 +832,7 @@ taxize	10.1111/jvs.12419	Wiser, S. K. (2016). Achievements and challenges in the
 
 
 --
--- Data for Name: cran; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: cran; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY cran (name, title, description, version, license, authors_r, url, bugreports, lazydata, vignettebuilder, imports, suggests, packaged, author, maintainer, needscompilation, repository, crandb_file_date, releases, date_publication, type, depends, pkg_collate, systemrequirements, enhances, lazyload, copyright, biarch, additional_repositories, encoding, lazydatacompression, inserted) FROM stdin;
@@ -898,7 +898,7 @@ webchem	Chemical Information from the Web	Chemical information from around the w
 
 
 --
--- Data for Name: cranlogs; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: cranlogs; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY cranlogs (name, cran_downloads, collected, inserted) FROM stdin;
@@ -1161,7 +1161,7 @@ zenodo	0	2015-07-28 00:27:38	2015-07-28 00:27:38
 
 
 --
--- Data for Name: github; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: github; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY github (id, name, created_at, updated_at, size, language, forks, open_issues, watchers, default_branch, inserted) FROM stdin;
@@ -1296,7 +1296,7 @@ COPY github (id, name, created_at, updated_at, size, language, forks, open_issue
 
 
 --
--- Data for Name: groupings; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: groupings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY groupings (name, "grouping") FROM stdin;
@@ -1532,7 +1532,7 @@ worrms	taxonomy
 
 
 --
--- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: repos; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY repos (name, repo_type, maintainer, email, status, installable, on_cran, cran_archived, url, root, fork, description, build_vignettes, route_github_travis, route_appveyor) FROM stdin;
@@ -1767,7 +1767,7 @@ worrms	package	Scott Chamberlain	myrmecocystus@gmail.com	good	t	f	\N	https://git
 
 
 --
--- Data for Name: travis; Type: TABLE DATA; Schema: public; Owner: sacmac
+-- Data for Name: travis; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_number, pull_request_title, state, started_at, finished_at, duration, job_ids, language, os, inserted) FROM stdin;
@@ -1775,7 +1775,7 @@ COPY travis (name, repository_id, commit_id, number, pull_request, pull_request_
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
 GRANT ALL ON SCHEMA public TO sacmac;
