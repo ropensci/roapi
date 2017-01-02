@@ -38,8 +38,8 @@ class ROApp < Sinatra::Application
 
   ## configuration
   configure do
-    set :raise_errors, false
-    set :show_exceptions, false
+    set :raise_errors, true
+    set :show_exceptions, true
   end
 
   # halt: error helpers
@@ -230,6 +230,17 @@ class ROApp < Sinatra::Application
     end
   end
 
+  get '/groupings/?' do
+    headers_get
+    begin
+      data = get_all_groupings()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
   get '/groupings/:grouping/?' do
     headers_get
     begin
@@ -247,6 +258,17 @@ class ROApp < Sinatra::Application
     headers_get
     begin
       data = get_repo_categories()
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+  get '/categories/?' do
+    headers_get
+    begin
+      data = get_all_categories()
       raise Exception.new('no results found') if data.length.zero?
       { count: data.length, error: nil, data: data }.to_json
     rescue Exception => e

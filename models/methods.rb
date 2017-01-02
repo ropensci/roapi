@@ -58,6 +58,11 @@ def get_repo_groupings
   return Groupings.select('grouping').where(:name => params[:name])
 end
 
+def get_all_groupings
+  # return Groupings.select('grouping')
+  return Groupings.uniq.pluck(:grouping)
+end
+
 def get_groupings
   return Groupings.select('name').where(:grouping => params[:grouping])
 end
@@ -66,6 +71,10 @@ end
 
 def get_repo_categories
   return Categories.select('category').where(:name => params[:name])
+end
+
+def get_all_categories
+  return Categories.uniq.pluck(:category)
 end
 
 def get_categories
