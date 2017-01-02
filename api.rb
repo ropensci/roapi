@@ -110,7 +110,7 @@ class ROApp < Sinatra::Application
         "/docs (GET)",
         "/heartbeat (GET)",
         "/repos (GET)",
-        #{}"/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
+        "/repos/:repo_name: (GET) (POST, PUT, DELETE [auth])",
         "/repos/:repo_name:/github (GET)",
         "/repos/:repo_name:/travis (GET)",
         "/repos/:repo_name:/appveyor (GET)",
@@ -126,7 +126,18 @@ class ROApp < Sinatra::Application
     })
   end
 
-  get '/repos/?:name?' do
+  get '/repos/?' do
+    headers_get
+    begin
+      data = get_repo(params)
+      raise Exception.new('no results found') if data.length.zero?
+      { count: data.length, error: nil, data: data }.to_json
+    rescue Exception => e
+      halt 400, { count: 0, error: { message: e.message }, data: nil }.to_json
+    end
+  end
+
+  get '/repos/:name/?' do
     headers_get
     begin
       data = get_repo(params)
