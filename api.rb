@@ -92,7 +92,7 @@ class ROApp < Sinatra::Application
   end
 
   ## routes
-  get '/' do
+  get '/?' do
     headers_get
     redirect '/heartbeat'
   end
