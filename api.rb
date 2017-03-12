@@ -107,9 +107,9 @@ class ROApp < Sinatra::Application
     redirect '/heartbeat'
   end
 
-  get '/docs' do
+  get '/docs/?' do
     headers_get
-    redirect 'https://github.com/ropensci/roapi/wiki'
+    redirect 'https://github.com/ropensci/roapi/wiki', 301
   end
 
   get "/heartbeat/?" do
