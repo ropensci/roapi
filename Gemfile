@@ -1,8 +1,8 @@
 source "http://rubygems.org/"
 
 gem 'json', '~> 2.0', '>= 2.0.2'
-gem 'sinatra', '~> 2.0.0.beta2'
-gem 'sinatra-contrib', '~> 2.0.0.beta2'
+gem 'sinatra', '~> 1.4', '>= 1.4.8'
+gem 'sinatra-contrib', '~> 1.4', '>= 1.4.7'
 gem 'unicorn', '~> 5.2'
 gem 'octokit', '~> 4.6', '>= 4.6.2'
 gem 'coveralls', '~> 0.8.17'
