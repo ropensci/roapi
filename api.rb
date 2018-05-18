@@ -40,6 +40,7 @@ class ROApp < Sinatra::Application
   configure do
     set :raise_errors, true
     set :show_exceptions, true
+    set :protection, :except => [:json_csrf]
   end
 
   # halt: error helpers
